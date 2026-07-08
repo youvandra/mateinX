@@ -1,5 +1,77 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 import ScrollReveal from '@/components/ScrollReveal';
 import PuzzleSlideshow from '@/components/PuzzleSlideshow';
+
+function AnimatedCounter({ target, suffix = '', duration = 2000 }: { target: number; suffix?: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const startTime = Date.now();
+          const animate = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * target));
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return <div ref={ref} className="text-3xl font-bold text-terminal-900">{count.toLocaleString()}{suffix}</div>;
+}
+
+function StepCard({ num, title, desc, icon, delay }: { num: string; title: string; desc: string; icon: string; delay: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <ScrollReveal delay={delay}>
+      <div
+        className="relative border border-terminal-200 bg-white p-8 h-full cursor-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-terminal-800 to-terminal-400 transition-all duration-500 ${hovered ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`text-4xl mb-4 transition-transform duration-500 ${hovered ? 'scale-110 rotate-6' : ''}`}>
+          {icon}
+        </div>
+        <div className="text-xs font-mono text-terminal-400 mb-2">STEP {num}</div>
+        <h3 className="text-lg font-bold text-terminal-900 mb-3">{title}</h3>
+        <p className="text-terminal-600 text-sm leading-relaxed">{desc}</p>
+        <div className={`absolute bottom-4 right-4 text-2xl font-bold text-terminal-100 transition-all duration-500 ${hovered ? 'text-terminal-200 scale-110' : ''}`}>
+          {num}
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+}
+
+function FloatingPiece({ piece, delay, left }: { piece: string; delay: number; left: string }) {
+  return (
+    <div
+      className="absolute text-4xl opacity-10 pointer-events-none select-none"
+      style={{
+        left,
+        animation: `floatPiece 6s ease-in-out ${delay}s infinite`,
+      }}
+    >
+      {piece}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -78,79 +150,94 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      {/* How It Works */}
-      <section className="border-b border-terminal-200">
+      {/* How It Works — Interactive */}
+      <section className="border-b border-terminal-200 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 py-20">
           <ScrollReveal>
             <div className="text-center mb-12">
               <p className="text-xs font-mono text-terminal-400 uppercase tracking-widest mb-2">How It Works</p>
               <h2 className="text-3xl md:text-4xl font-bold text-terminal-900">
-                Play. Solve. Earn.
+                Three Steps to Earn
               </h2>
               <p className="text-terminal-600 mt-2 max-w-xl mx-auto">
-                Three simple steps to start earning USDT with your chess skills.
+                From puzzle to payout in under a minute.
               </p>
             </div>
           </ScrollReveal>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { num: '01', title: 'Pick Your Difficulty', desc: 'Choose from Easy, Medium, Hard, or Grandmaster. Higher difficulty means bigger rewards.' },
-              { num: '02', title: 'Solve the Puzzle', desc: 'Pay a small entry fee via the OKX Agent Payments Protocol. Find the winning move sequence and submit.' },
-              { num: '03', title: 'Get Rewarded', desc: 'Solve correctly and USDT is sent to your wallet. Wrong? Try again — no hard feelings.' },
-            ].map((step, i) => (
-              <ScrollReveal key={step.num} delay={i * 150}>
-                <div className="border border-terminal-200 bg-white p-8 text-center h-full">
-                  <div className="w-12 h-12 border border-terminal-300 bg-terminal-50 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-xl font-bold text-terminal-700">{step.num}</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-terminal-900 mb-3">{step.title}</h3>
-                  <p className="text-terminal-600 text-sm leading-relaxed">{step.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
+            <StepCard
+              num="01"
+              title="Pick Your Difficulty"
+              desc="Choose from Easy, Medium, Hard, or Grandmaster. Higher difficulty means bigger rewards."
+              icon="🎯"
+              delay={0}
+            />
+            <StepCard
+              num="02"
+              title="Solve the Puzzle"
+              desc="Pay a small entry fee via the OKX Agent Payments Protocol. Find the winning move sequence and submit."
+              icon="♟"
+              delay={150}
+            />
+            <StepCard
+              num="03"
+              title="Get Rewarded"
+              desc="Solve correctly and USDT is sent to your wallet. Wrong? Try again — no hard feelings."
+              icon="💰"
+              delay={300}
+            />
           </div>
-
-          <ScrollReveal delay={450}>
-            <div className="text-center mt-10">
-              <a
-                href="/dashboard"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
-              >
-                ♟ Start Solving
-              </a>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
-      {/* Stats */}
-      <ScrollReveal>
-        <section className="border-b border-terminal-200 bg-terminal-50">
-          <div className="max-w-6xl mx-auto px-6 py-16">
-            <div className="grid md:grid-cols-4 gap-6 text-center">
-              {[
-                { value: '100K+', label: 'curated puzzles' },
-                { value: 'x402', label: 'payment protocol' },
-                { value: 'USDT', label: 'instant rewards' },
-                { value: 'Live', label: 'on OKX.AI' },
-              ].map((stat) => (
-                <div key={stat.value}>
-                  <p className="text-3xl font-bold text-terminal-900">{stat.value}</p>
-                  <p className="text-terminal-600 text-sm font-mono mt-1">{stat.label}</p>
-                </div>
-              ))}
+      {/* Stats — Animated Counters */}
+      <section className="border-b border-terminal-200 bg-terminal-50 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <FloatingPiece piece="♔" delay={0} left="10%" />
+          <FloatingPiece piece="♕" delay={1} left="30%" />
+          <FloatingPiece piece="♖" delay={2} left="50%" />
+          <FloatingPiece piece="♗" delay={3} left="70%" />
+          <FloatingPiece piece="♘" delay={4} left="85%" />
+        </div>
+        <div className="max-w-6xl mx-auto px-6 py-16 relative z-10">
+          <div className="grid md:grid-cols-4 gap-6 text-center">
+            <div>
+              <AnimatedCounter target={100} suffix="K+" />
+              <p className="text-terminal-600 text-sm font-mono mt-1">curated puzzles</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-terminal-900">x402</div>
+              <p className="text-terminal-600 text-sm font-mono mt-1">payment protocol</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-terminal-900">USDT</div>
+              <p className="text-terminal-600 text-sm font-mono mt-1">instant rewards</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-terminal-900 flex items-center justify-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                Live
+              </div>
+              <p className="text-terminal-600 text-sm font-mono mt-1">on OKX.AI</p>
             </div>
           </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
-      {/* CTA */}
-      <ScrollReveal>
-        <section className="py-20">
-          <div className="max-w-6xl mx-auto px-6 text-center">
+      {/* CTA — Dynamic */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-terminal-50 via-white to-terminal-100" />
+        <div className="absolute top-10 left-10 text-8xl opacity-5 select-none pointer-events-none"></div>
+        <div className="absolute bottom-10 right-10 text-8xl opacity-5 select-none pointer-events-none"></div>
+        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
+          <ScrollReveal>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-terminal-100 border border-terminal-200 rounded-full text-xs font-mono text-terminal-600 mb-6">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Ready to play?
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-terminal-900">
-              Ready to Play?
+              Your Move.
             </h2>
             <p className="text-terminal-600 mt-3 max-w-xl mx-auto">
               Connect your XLayer wallet and start solving puzzles. Every correct
@@ -159,7 +246,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-3 mt-8">
               <a
                 href="/dashboard"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 border border-terminal-800"
               >
                 ♟ Dashboard
               </a>
@@ -167,14 +254,21 @@ export default function Home() {
                 href="https://okx.ai/agents"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 border border-terminal-300"
               >
                 → Try on OKX.AI
               </a>
             </div>
-          </div>
-        </section>
-      </ScrollReveal>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <style>{`
+        @keyframes floatPiece {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(10deg); }
+        }
+      `}</style>
     </div>
   );
 }
