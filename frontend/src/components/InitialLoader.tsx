@@ -8,7 +8,7 @@ export default function InitialLoader() {
 
   useEffect(() => {
     const img = new Image();
-    img.src = '/Hero.png';
+    img.src = '/Hero.webp';
 
     let done = false;
     const checkReady = () => {

@@ -8,7 +8,7 @@ export default function Home() {
       <section
         className="relative min-h-screen flex items-center"
         style={{
-          backgroundImage: 'url(/Hero.png)',
+          backgroundImage: 'url(/Hero.webp)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
