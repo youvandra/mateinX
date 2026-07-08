@@ -57,11 +57,18 @@ export default function PuzzleView({ fen, difficulty, reward, gameId: initialGam
     }
   };
 
-  const statusLine = (() => {
-    if (!result) return { label: 'pending', color: 'text-terminal-400' };
-    if (result.status === 'illegal') return { label: 'illegal', color: 'text-yellow-600' };
-    if (result.correct) return { label: 'solved', color: 'text-green-600' };
-    return { label: 'failed', color: 'text-red-600' };
+  const statusColor = (() => {
+    if (!result) return 'text-[#737373]';
+    if (result.status === 'illegal') return 'text-yellow-400';
+    if (result.correct) return 'text-[#34d399]';
+    return 'text-red-400';
+  })();
+
+  const statusLabel = (() => {
+    if (!result) return 'pending';
+    if (result.status === 'illegal') return 'illegal move';
+    if (result.correct) return 'solved';
+    return 'failed';
   })();
 
   return (
@@ -71,24 +78,24 @@ export default function PuzzleView({ fen, difficulty, reward, gameId: initialGam
       </div>
 
       <div className="space-y-4">
-        <div className="border border-terminal-200 bg-white p-4 space-y-3">
-          <div className="flex items-center gap-3 text-xs">
-            <span className="text-terminal-500">difficulty:</span>
-            <span className="text-terminal-800 font-medium">{difficulty}</span>
-            <span className="text-terminal-300">|</span>
-            <span className="text-terminal-500">reward:</span>
-            <span className="text-green-600 font-medium">{reward} USDT</span>
+        <div className="border border-[#1a1a1a] rounded-lg bg-[#0d0d0d] p-5 space-y-4">
+          <div className="flex items-center gap-3 text-sm">
+            <span className="text-[#737373] font-mono text-xs">difficulty:</span>
+            <span className="text-white font-medium">{difficulty}</span>
+            <span className="text-[#262626]">|</span>
+            <span className="text-[#737373] font-mono text-xs">reward:</span>
+            <span className="text-[#34d399] font-medium">{reward} USDT</span>
           </div>
 
-          <div className="text-xs">
-            <p className="text-terminal-400 mb-1">{`$ cat solution.log`}</p>
-            <div className="border border-terminal-200 bg-terminal-50 p-2 min-h-[60px]">
+          <div>
+            <div className="text-xs font-mono text-[#737373] mb-2">$ cat solution.log</div>
+            <div className="border border-[#1a1a1a] bg-[#0a0a0a] rounded-lg p-3 min-h-[60px]">
               {moves.length === 0 ? (
-                <span className="text-terminal-400 italic text-[10px]">// make a move on the board...</span>
+                <span className="text-[#525252] italic text-xs">// make a move on the board...</span>
               ) : (
-                <div className="flex flex-wrap gap-0.5">
+                <div className="flex flex-wrap gap-1">
                   {moves.map((m, i) => (
-                    <span key={i} className="text-terminal-700 text-[10px] font-mono">
+                    <span key={i} className="text-[#e5e5e5] text-xs font-mono">
                       {i % 2 === 0 ? `${Math.floor(i / 2) + 1}.` : ''}{m}{' '}
                     </span>
                   ))}
@@ -100,23 +107,23 @@ export default function PuzzleView({ fen, difficulty, reward, gameId: initialGam
           <button
             onClick={handleSubmit}
             disabled={!initialGameId || moves.length === 0 || solving}
-            className="w-full py-2 terminal-btn-primary text-xs font-mono disabled:opacity-30"
+            className="w-full px-4 py-2.5 text-sm font-medium text-black bg-white hover:bg-[#e5e5e5] rounded-lg transition-colors disabled:opacity-30"
           >
-            {solving ? '$ verifying...' : '$ submit_solution'}
+            {solving ? 'verifying...' : 'Submit Solution'}
           </button>
         </div>
 
         {result && (
-          <div className={`border bg-white p-4 text-xs border-terminal-200`}>
-            <p className={`font-semibold ${statusLine.color}`}>
-              $ status: {statusLine.label}
-            </p>
-            <p className="text-terminal-500 mt-1 text-[10px]">{result.message}</p>
+          <div className={`border border-[#1a1a1a] rounded-lg bg-[#0d0d0d] p-5`}>
+            <div className={`text-sm font-semibold ${statusColor}`}>
+              $ status: {statusLabel}
+            </div>
+            <div className="text-xs text-[#a3a3a3] mt-1">{result.message}</div>
             {result.correct && result.reward && (
-              <p className="text-green-600 text-[10px] mt-1">+{result.reward} USDT</p>
+              <div className="text-xs text-[#34d399] mt-1 font-mono">+{result.reward} USDT</div>
             )}
             {result.hint && (
-              <p className="text-yellow-600 text-[10px] mt-1 italic">{`// ${result.hint}`}</p>
+              <div className="text-xs text-yellow-400/80 mt-1 italic">{`// ${result.hint}`}</div>
             )}
           </div>
         )}

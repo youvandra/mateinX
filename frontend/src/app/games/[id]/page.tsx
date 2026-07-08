@@ -80,113 +80,113 @@ export default function GameDetail() {
   };
 
   if (loading) {
-    return <div className="text-terminal-400 text-xs font-mono">$ loading...</div>;
+    return <div className="pt-20 text-center text-sm text-[#525252] font-mono">loading...</div>;
   }
 
   if (!game) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-base font-bold text-terminal-800">{`$ game_not_found`}</h1>
+      <div className="pt-20 text-center">
+        <h1 className="text-lg font-bold text-white">Game Not Found</h1>
       </div>
     );
   }
 
   const statusColors: Record<string, string> = {
-    active: 'border-blue-500 text-blue-600',
-    solved: 'border-green-500 text-green-600',
-    failed: 'border-red-500 text-red-600',
-    pending: 'border-terminal-300 text-terminal-500',
+    active: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+    solved: 'text-green-400 border-green-500/30 bg-green-500/10',
+    failed: 'text-red-400 border-red-500/30 bg-red-500/10',
+    pending: 'text-[#737373] border-[#262626] bg-[#1a1a1a]',
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-4">
-      <div className="flex items-center gap-3 text-xs font-mono">
-        <a href="/dashboard" className="text-terminal-500 hover:text-terminal-800 transition-colors">
-          {'<- back'}
+    <div className="pt-20 max-w-6xl mx-auto px-6 pb-12">
+      <div className="flex items-center gap-3 mb-6">
+        <a href="/dashboard" className="text-sm text-[#737373] hover:text-white transition-colors">
+          &larr; back
         </a>
-        <span className={`px-1.5 py-0.5 text-[10px] border ${statusColors[game.status] || 'border-terminal-300 text-terminal-500'}`}>
+        <span className={`inline-flex px-2 py-0.5 text-xs font-mono border rounded ${statusColors[game.status] || 'text-[#737373] border-[#262626] bg-[#1a1a1a]'}`}>
           {game.status}
         </span>
-        <span className="text-terminal-400 text-[10px]">#{game.id.slice(0, 8)}</span>
+        <span className="text-xs font-mono text-[#525252]">#{game.id.slice(0, 8)}</span>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <div className="border border-terminal-200">
+          <div className="rounded-lg border border-[#1a1a1a] overflow-hidden">
             <Chessboard
               id="game-detail-board"
               position={fenHistory[currentMoveIndex]}
               boardWidth={400}
               arePiecesDraggable={false}
               customBoardStyle={{ borderRadius: '0px' }}
-              customDarkSquareStyle={{ backgroundColor: '#b58863' }}
-              customLightSquareStyle={{ backgroundColor: '#f0d9b5' }}
+              customDarkSquareStyle={{ backgroundColor: '#739552' }}
+              customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
             />
           </div>
 
           {fenHistory.length > 1 && (
-            <div className="flex items-center justify-center gap-4 border border-terminal-200 bg-terminal-50 p-2">
+            <div className="flex items-center justify-center gap-4 border border-[#1a1a1a] bg-[#0d0d0d] rounded-lg p-3">
               <button
                 onClick={() => navigateMove(-1)}
                 disabled={currentMoveIndex <= 0}
-                className="px-3 py-1 terminal-btn text-[10px] disabled:opacity-30"
+                className="px-3 py-1.5 text-xs font-medium text-[#a3a3a3] border border-[#262626] rounded hover:border-[#404040] hover:text-white disabled:opacity-30 transition-colors"
               >
-                {'<- prev'}
+                &larr; Prev
               </button>
-              <span className="text-[10px] text-terminal-500 font-mono">
+              <span className="text-xs font-mono text-[#525252]">
                 {currentMoveIndex} / {fenHistory.length - 1}
               </span>
               <button
                 onClick={() => navigateMove(1)}
                 disabled={currentMoveIndex >= fenHistory.length - 1}
-                className="px-3 py-1 terminal-btn text-[10px] disabled:opacity-30"
+                className="px-3 py-1.5 text-xs font-medium text-[#a3a3a3] border border-[#262626] rounded hover:border-[#404040] hover:text-white disabled:opacity-30 transition-colors"
               >
-                {'next ->'}
+                Next &rarr;
               </button>
             </div>
           )}
         </div>
 
         <div className="space-y-4">
-          <div className="border border-terminal-200 bg-white p-4 space-y-3 text-xs font-mono">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="border border-[#1a1a1a] rounded-lg bg-[#0d0d0d] p-5 space-y-4 text-sm">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-terminal-400 text-[10px] uppercase">puzzle</p>
-                <p className="text-terminal-600 text-[10px] break-all">{game.puzzle_id}</p>
+                <div className="text-xs text-[#737373] font-mono">puzzle</div>
+                <div className="text-xs font-mono text-[#a3a3a3] break-all mt-1">{game.puzzle_id}</div>
               </div>
               <div>
-                <p className="text-terminal-400 text-[10px] uppercase">user</p>
-                <p className="text-terminal-600 text-[10px]">{game.user_address.slice(0, 6)}...{game.user_address.slice(-4)}</p>
+                <div className="text-xs text-[#737373] font-mono">user</div>
+                <div className="text-xs font-mono text-[#a3a3a3] mt-1">{game.user_address.slice(0, 6)}...{game.user_address.slice(-4)}</div>
               </div>
               <div>
-                <p className="text-terminal-400 text-[10px] uppercase">entry fee</p>
-                <p className="text-terminal-800">{game.entry_fee} USDT</p>
+                <div className="text-xs text-[#737373] font-mono">entry fee</div>
+                <div className="text-white font-mono mt-1">{game.entry_fee} USDT</div>
               </div>
               <div>
-                <p className="text-terminal-400 text-[10px] uppercase">reward</p>
-                <p className="text-green-600">{game.reward} USDT</p>
+                <div className="text-xs text-[#737373] font-mono">reward</div>
+                <div className="text-[#34d399] font-mono mt-1">{game.reward} USDT</div>
               </div>
               <div>
-                <p className="text-terminal-400 text-[10px] uppercase">date</p>
-                <p className="text-terminal-500 text-[10px]">{new Date(game.created_at).toLocaleString()}</p>
+                <div className="text-xs text-[#737373] font-mono">date</div>
+                <div className="text-xs text-[#a3a3a3] mt-1">{new Date(game.created_at).toLocaleString()}</div>
               </div>
               <div>
-                <p className="text-terminal-400 text-[10px] uppercase">solved at</p>
-                <p className="text-terminal-500 text-[10px]">{game.solved_at ? new Date(game.solved_at).toLocaleString() : '-'}</p>
+                <div className="text-xs text-[#737373] font-mono">solved at</div>
+                <div className="text-xs text-[#a3a3a3] mt-1">{game.solved_at ? new Date(game.solved_at).toLocaleString() : '-'}</div>
               </div>
             </div>
             {game.reward_tx && (
-              <div>
-                <p className="text-terminal-400 text-[10px] uppercase">reward tx</p>
-                <p className="text-terminal-600 text-[10px] break-all">{game.reward_tx}</p>
+              <div className="pt-3 border-t border-[#1a1a1a]">
+                <div className="text-xs text-[#737373] font-mono mb-1">reward tx</div>
+                <div className="text-xs font-mono text-[#a3a3a3] break-all">{game.reward_tx}</div>
               </div>
             )}
           </div>
 
           {game.solution && (
-            <div className="border border-terminal-200 bg-white p-4">
-              <p className="text-terminal-500 text-[10px] uppercase mb-2">submitted solution</p>
-              <div className="flex flex-wrap gap-0.5">
+            <div className="border border-[#1a1a1a] rounded-lg bg-[#0d0d0d] p-5">
+              <div className="text-xs font-mono text-[#737373] mb-3">submitted solution</div>
+              <div className="flex flex-wrap gap-1">
                 {game.solution.split(' ').filter(Boolean).map((m, i) => {
                   const allMoves = game.puzzle_moves?.split(' ') || [];
                   const isCorrect = i < allMoves.length &&
@@ -194,10 +194,10 @@ export default function GameDetail() {
                   return (
                     <span
                       key={i}
-                      className={`px-1 py-0.5 text-[10px] font-mono border ${
+                      className={`px-2 py-0.5 text-xs font-mono border rounded ${
                         isCorrect
-                          ? 'border-green-300 text-green-700 bg-green-50'
-                          : 'border-red-300 text-red-700 bg-red-50'
+                          ? 'border-green-500/30 text-green-400 bg-green-500/10'
+                          : 'border-red-500/30 text-red-400 bg-red-500/10'
                       }`}
                     >
                       {m}
@@ -206,11 +206,11 @@ export default function GameDetail() {
                 })}
               </div>
               {game.puzzle_moves && game.status === 'failed' && (
-                <div className="mt-3 pt-3 border-t border-terminal-200">
-                  <p className="text-terminal-500 text-[10px] uppercase mb-1">expected</p>
-                  <div className="flex flex-wrap gap-0.5">
+                <div className="mt-4 pt-4 border-t border-[#1a1a1a]">
+                  <div className="text-xs font-mono text-[#737373] mb-2">expected</div>
+                  <div className="flex flex-wrap gap-1">
                     {game.puzzle_moves.split(' ').map((m, i) => (
-                      <span key={i} className="px-1 py-0.5 text-[10px] font-mono border border-green-300 text-green-700 bg-green-50">
+                      <span key={i} className="px-2 py-0.5 text-xs font-mono border border-green-500/30 text-green-400 bg-green-500/10 rounded">
                         {m}
                       </span>
                     ))}

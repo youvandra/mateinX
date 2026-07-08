@@ -18,18 +18,16 @@ export default function ChessBoard({ fen, onMove, disabled, orientation, height 
   };
 
   return (
-    <div className="border border-terminal-200">
+    <div className="rounded-lg border border-[#1a1a1a] overflow-hidden">
       <Chessboard
         id="matein-board"
         position={fen}
         onPieceDrop={onDrop}
         boardOrientation={orientation}
         boardWidth={height}
-        customBoardStyle={{
-          borderRadius: '0px',
-        }}
-        customDarkSquareStyle={{ backgroundColor: '#b58863' }}
-        customLightSquareStyle={{ backgroundColor: '#f0d9b5' }}
+        customBoardStyle={{ borderRadius: '0px' }}
+        customDarkSquareStyle={{ backgroundColor: '#739552' }}
+        customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
         arePiecesDraggable={!disabled}
       />
     </div>
