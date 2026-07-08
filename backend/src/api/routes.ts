@@ -139,6 +139,17 @@ router.post('/v1/solve', (req: Request, res: Response) => {
   const fenStart = getPuzzleStartFen(puzzle.fen, puzzle.moves);
   const result = validateSolution(fenStart, puzzle.moves, solution);
 
+  if (result.illegal_move) {
+    return res.json({
+      status: 'illegal',
+      correct: false,
+      game_id,
+      message: `"${result.illegal_move}" is not a legal move. Try again.`,
+      illegal_move: result.illegal_move,
+      legal_moves_so_far: result.solution,
+    });
+  }
+
   if (result.correct) {
     solveGame(game_id, solution);
     recordSolve(user_address, game.reward);

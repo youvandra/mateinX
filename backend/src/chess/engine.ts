@@ -14,6 +14,7 @@ export interface SolveResult {
   correct: boolean;
   solution: string[];
   expected: string[];
+  illegal_move?: string;
 }
 
 export function generatePuzzle(difficulty: string): PuzzleResponse | null {
@@ -60,42 +61,60 @@ export function validateSolution(
   puzzleFen: string,
   puzzleMoves: string,
   userSolution: string
-): SolveResult {
+): SolveResult & { illegal_move?: string } {
   const allMoves = puzzleMoves.split(' ');
-  const game = new Chess(puzzleFen);
-
   const userMoves = userSolution.split(' ').filter(Boolean);
 
-  const correctCount = userMoves.length <= allMoves.length
-    ? allMoves.slice(0, userMoves.length)
-    : allMoves;
+  const game = new Chess(puzzleFen);
+  const checkGame = new Chess(puzzleFen);
 
   let allCorrect = true;
   const expected: string[] = [];
+  const played: string[] = [];
 
-  for (let i = 0; i < userMoves.length && i < allMoves.length; i++) {
-    const userMove = userMoves[i];
-    const correctMove = allMoves[i];
+  for (let i = 0; i < allMoves.length; i++) {
+    try {
+      checkGame.move(allMoves[i]);
+      expected.push(checkGame.history().pop()!);
+    } catch {
+      expected.push(allMoves[i]);
+    }
+  }
 
-    const isCorrect = normalizeMove(userMove) === normalizeMove(correctMove);
-    if (!isCorrect) allCorrect = false;
-    expected.push(correctMove);
+  for (let i = 0; i < userMoves.length; i++) {
+    const raw = userMoves[i];
+
+    try {
+      const result = game.move(raw, { strict: true });
+      played.push(result.san);
+
+      if (i >= allMoves.length) {
+        allCorrect = false;
+        continue;
+      }
+
+      if (result.san !== expected[i]) {
+        allCorrect = false;
+      }
+    } catch {
+      return {
+        correct: false,
+        solution: [...played, raw],
+        expected,
+        illegal_move: raw,
+      };
+    }
   }
 
   if (userMoves.length < allMoves.length) {
     allCorrect = false;
-    expected.push(...allMoves.slice(userMoves.length));
   }
 
   return {
     correct: allCorrect,
-    solution: userMoves,
+    solution: played,
     expected,
   };
-}
-
-function normalizeMove(move: string): string {
-  return move.replace(/[+#]$/, '').toLowerCase();
 }
 
 export function getDifficultyLabel(rating: number): string {
