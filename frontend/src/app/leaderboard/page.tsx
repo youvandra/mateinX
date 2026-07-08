@@ -33,7 +33,7 @@ export default function Leaderboard() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <div className="flex items-center gap-2">
         <img src="/Logo.svg" alt="" className="h-5 w-5" />
         <h1 className="text-base font-bold text-terminal-800 uppercase tracking-wider">Leaderboard</h1>

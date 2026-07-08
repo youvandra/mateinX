@@ -99,7 +99,7 @@ export default function GameDetail() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-4">
       <div className="flex items-center gap-3 text-xs font-mono">
         <a href="/dashboard" className="text-terminal-500 hover:text-terminal-800 transition-colors">
           {'<- back'}
