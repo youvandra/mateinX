@@ -114,7 +114,7 @@ export default function Dashboard() {
               </thead>
               <tbody className="divide-y divide-matein-100">
                 {games.map((game) => (
-                  <tr key={game.id} className="hover:bg-matein-50">
+                  <tr key={game.id} className="hover:bg-matein-50 cursor-pointer" onClick={() => window.location.href = `/games/${game.id}`}>
                     <td className="p-3 font-mono text-xs">{game.puzzle_id.slice(0, 12)}...</td>
                     <td className="p-3 capitalize">{game.puzzle_id.includes('easy') ? 'Easy' : game.puzzle_id.includes('medium') ? 'Medium' : game.puzzle_id.includes('hard') ? 'Hard' : 'Grandmaster'}</td>
                     <td className="p-3">

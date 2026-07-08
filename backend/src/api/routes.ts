@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { Chess } from 'chess.js';
 import { generatePuzzle, validateSolution, getEntryFeeForDifficulty } from '../chess/engine';
-import { createGame, getGame, solveGame, failGame, setRewardTx, getGamesByUser } from '../db/games';
+import { createGame, getGame, solveGame, failGame, setRewardTx, getGamesByUser, getGameDetail } from '../db/games';
 import { getLeaderboard, getUserStats, recordSolve, recordFail } from '../db/leaderboard';
 import { buildPaymentRequiredResponse, verifyPayment } from '../payments/x402';
 import { sendReward } from '../rewards/dispatcher';
@@ -191,6 +191,15 @@ router.get('/v1/stats/:userAddress', (req: Request, res: Response) => {
   const stats = getUserStats(userAddress);
   const recentGames = getGamesByUser(userAddress, 5);
   res.json({ stats, recent_games: recentGames });
+});
+
+router.get('/v1/game/:gameId', (req: Request, res: Response) => {
+  const gameId = String(req.params.gameId);
+  const detail = getGameDetail(gameId);
+  if (!detail) {
+    return res.status(404).json({ error: 'game_not_found' });
+  }
+  res.json({ game: detail });
 });
 
 router.get('/v1/health', (_req: Request, res: Response) => {

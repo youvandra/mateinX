@@ -65,13 +65,34 @@ export function setRewardTx(id: string, txHash: string): void {
   saveDb();
 }
 
-export function getGamesByUser(userAddress: string, limit = 20): Game[] {
+export function getGameDetail(id: string): Game & { fen?: string; puzzle_moves?: string } | undefined {
   const db = getDb();
-  const stmt = db.prepare('SELECT * FROM games WHERE user_address = ? ORDER BY created_at DESC LIMIT ?');
+  const stmt = db.prepare(`
+    SELECT g.*, p.fen, p.moves as puzzle_moves
+    FROM games g
+    LEFT JOIN puzzles p ON g.puzzle_id = p.id
+    WHERE g.id = ?
+  `);
+  stmt.bind([id]);
+  const row = stmt.step() ? stmt.getAsObject() : undefined;
+  stmt.free();
+  return row as any;
+}
+
+export function getGamesByUser(userAddress: string, limit = 20): (Game & { fen?: string })[] {
+  const db = getDb();
+  const stmt = db.prepare(`
+    SELECT g.*, p.fen
+    FROM games g
+    LEFT JOIN puzzles p ON g.puzzle_id = p.id
+    WHERE g.user_address = ?
+    ORDER BY g.created_at DESC
+    LIMIT ?
+  `);
   stmt.bind([userAddress, limit]);
-  const results: Game[] = [];
+  const results: any[] = [];
   while (stmt.step()) {
-    results.push(stmt.getAsObject() as unknown as Game);
+    results.push(stmt.getAsObject());
   }
   stmt.free();
   return results;
