@@ -1,5 +1,5 @@
 import ScrollReveal from '@/components/ScrollReveal';
-import MiniGame from '@/components/MiniGame';
+import PuzzleSlideshow from '@/components/PuzzleSlideshow';
 
 export default function Home() {
   return (
@@ -46,32 +46,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Try It Now — Mini Game */}
-      <section className="border-b border-terminal-200">
+      {/* Try It Now — Puzzle Slideshow */}
+      <section className="border-b border-terminal-200 overflow-hidden">
         <ScrollReveal>
           <div className="max-w-6xl mx-auto px-6 py-20">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <p className="text-xs font-mono text-terminal-400 uppercase tracking-widest mb-2">Try It Now</p>
                 <h2 className="text-3xl md:text-4xl font-bold text-terminal-900 leading-tight">
-                  Solve a Puzzle
+                  Puzzles in Action
                 </h2>
                 <p className="text-terminal-600 mt-4 leading-relaxed">
-                  Drag pieces on the board to make your moves. Submit when you think
-                  you&apos;ve found the winning sequence. A new puzzle loads automatically
-                  on each solve.
+                  Watch real chess puzzles cycle automatically. Each position
+                  is a challenge from our database — hand-picked for difficulty
+                  and quality.
                 </p>
                 <div className="flex flex-wrap gap-3 mt-8">
                   <a
                     href="/dashboard"
                     className="inline-flex items-center gap-2 px-6 py-2.5 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
                   >
-                    ♟ Go to Dashboard
+                    ♟ Start Solving
                   </a>
                 </div>
               </div>
-              <div>
-                <MiniGame />
+              <div className="flex justify-center">
+                <PuzzleSlideshow />
               </div>
             </div>
           </div>
