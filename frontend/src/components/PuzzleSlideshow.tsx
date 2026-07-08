@@ -11,7 +11,6 @@ interface PuzzleSlide {
 export default function PuzzleSlideshow() {
   const [slides, setSlides] = useState<PuzzleSlide[]>([]);
   const [current, setCurrent] = useState(0);
-  const [visible, setVisible] = useState(true);
   const fetching = useRef(false);
 
   const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006';
@@ -59,17 +58,11 @@ export default function PuzzleSlideshow() {
   useEffect(() => {
     fetchNext();
     const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setCurrent(prev => {
-          const nextIdx = prev + 1;
-          if (nextIdx >= 8) {
-            fetchNext();
-          }
-          return nextIdx;
-        });
-        setVisible(true);
-      }, 300);
+      setCurrent(prev => {
+        const nextIdx = prev + 1;
+        if (nextIdx >= 8) fetchNext();
+        return nextIdx;
+      });
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -85,18 +78,15 @@ export default function PuzzleSlideshow() {
   const slide = slides[current % Math.max(slides.length, 1)];
 
   return (
-    <div className="transition-opacity duration-300" style={{ opacity: visible ? 1 : 0 }}>
-      {slide && (
-        <Chessboard
-          id={`puzzle-slide-${slide.id}`}
-          position={slide.fen}
-          boardWidth={480}
-          arePiecesDraggable={false}
-          customBoardStyle={{ borderRadius: '0px' }}
-          customDarkSquareStyle={{ backgroundColor: '#739552' }}
-          customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
-        />
-      )}
-    </div>
+    <Chessboard
+      id="puzzle-slideshow"
+      position={slide.fen}
+      boardWidth={480}
+      arePiecesDraggable={false}
+      animationDuration={400}
+      customBoardStyle={{ borderRadius: '0px' }}
+      customDarkSquareStyle={{ backgroundColor: '#739552' }}
+      customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
+    />
   );
 }
