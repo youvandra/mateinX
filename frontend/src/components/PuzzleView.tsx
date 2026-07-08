@@ -58,10 +58,10 @@ export default function PuzzleView({ fen, difficulty, reward, gameId: initialGam
   };
 
   const statusLine = (() => {
-    if (!result) return { label: 'pending', color: 'text-terminal-500' };
-    if (result.status === 'illegal') return { label: 'illegal', color: 'text-yellow-400' };
-    if (result.correct) return { label: 'solved', color: 'text-green-400' };
-    return { label: 'failed', color: 'text-red-400' };
+    if (!result) return { label: 'pending', color: 'text-terminal-400' };
+    if (result.status === 'illegal') return { label: 'illegal', color: 'text-yellow-600' };
+    if (result.correct) return { label: 'solved', color: 'text-green-600' };
+    return { label: 'failed', color: 'text-red-600' };
   })();
 
   return (
@@ -71,24 +71,24 @@ export default function PuzzleView({ fen, difficulty, reward, gameId: initialGam
       </div>
 
       <div className="space-y-4">
-        <div className="terminal-border bg-terminal-900 p-4 space-y-3">
+        <div className="border border-terminal-200 bg-white p-4 space-y-3">
           <div className="flex items-center gap-3 text-xs">
-            <span className="text-terminal-400">difficulty:</span>
-            <span className="text-terminal-50">{difficulty}</span>
-            <span className="text-terminal-600">|</span>
-            <span className="text-terminal-400">reward:</span>
-            <span className="text-green-400">{reward} USDT</span>
+            <span className="text-terminal-500">difficulty:</span>
+            <span className="text-terminal-800 font-medium">{difficulty}</span>
+            <span className="text-terminal-300">|</span>
+            <span className="text-terminal-500">reward:</span>
+            <span className="text-green-600 font-medium">{reward} USDT</span>
           </div>
 
           <div className="text-xs">
-            <p className="text-terminal-500 mb-1">{`$ cat solution.log`}</p>
-            <div className="border border-terminal-700 bg-black p-2 min-h-[60px]">
+            <p className="text-terminal-400 mb-1">{`$ cat solution.log`}</p>
+            <div className="border border-terminal-200 bg-terminal-50 p-2 min-h-[60px]">
               {moves.length === 0 ? (
-                <span className="text-terminal-600 italic text-[10px]">// make a move on the board...</span>
+                <span className="text-terminal-400 italic text-[10px]">// make a move on the board...</span>
               ) : (
                 <div className="flex flex-wrap gap-0.5">
                   {moves.map((m, i) => (
-                    <span key={i} className="text-terminal-300 text-[10px] font-mono">
+                    <span key={i} className="text-terminal-700 text-[10px] font-mono">
                       {i % 2 === 0 ? `${Math.floor(i / 2) + 1}.` : ''}{m}{' '}
                     </span>
                   ))}
@@ -107,16 +107,16 @@ export default function PuzzleView({ fen, difficulty, reward, gameId: initialGam
         </div>
 
         {result && (
-          <div className={`terminal-border bg-terminal-900 p-4 text-xs`}>
+          <div className={`border bg-white p-4 text-xs border-terminal-200`}>
             <p className={`font-semibold ${statusLine.color}`}>
               $ status: {statusLine.label}
             </p>
-            <p className="text-terminal-400 mt-1 text-[10px]">{result.message}</p>
+            <p className="text-terminal-500 mt-1 text-[10px]">{result.message}</p>
             {result.correct && result.reward && (
-              <p className="text-green-400 text-[10px] mt-1">+{result.reward} USDT</p>
+              <p className="text-green-600 text-[10px] mt-1">+{result.reward} USDT</p>
             )}
             {result.hint && (
-              <p className="text-yellow-400 text-[10px] mt-1 italic">{`// ${result.hint}`}</p>
+              <p className="text-yellow-600 text-[10px] mt-1 italic">{`// ${result.hint}`}</p>
             )}
           </div>
         )}

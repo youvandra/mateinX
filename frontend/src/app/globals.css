@@ -5,15 +5,15 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  --foreground: #e5e5e5;
-  --background: #000000;
-  --accent: #ffffff;
-  --muted: #404040;
+  --foreground: #171717;
+  --background: #fafafa;
+  --accent: #171717;
+  --muted: #a3a3a3;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #404040 #000000;
+  scrollbar-color: #d4d4d4 #fafafa;
 }
 
 *::-webkit-scrollbar {
@@ -21,11 +21,11 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #000000;
+  background: #fafafa;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #404040;
+  background: #d4d4d4;
   border-radius: 3px;
 }
 
@@ -36,29 +36,29 @@ body {
 }
 
 ::selection {
-  background: #ffffff;
-  color: #000000;
+  background: #171717;
+  color: #fafafa;
 }
 
 @layer utilities {
   .terminal-border {
-    @apply border border-terminal-700;
+    @apply border border-terminal-300;
   }
 
   .terminal-card {
-    @apply bg-terminal-900 rounded-none terminal-border;
+    @apply bg-white rounded-none terminal-border;
   }
 
   .terminal-input {
-    @apply bg-terminal-900 text-terminal-100 border border-terminal-700 focus:border-terminal-300 focus:outline-none px-3 py-2 text-sm;
+    @apply bg-white text-terminal-800 border border-terminal-300 focus:border-terminal-600 focus:outline-none px-3 py-2 text-sm;
   }
 
   .terminal-btn {
-    @apply bg-terminal-800 text-terminal-100 border border-terminal-600 hover:bg-terminal-700 hover:border-terminal-400 transition-colors text-sm font-medium;
+    @apply bg-terminal-100 text-terminal-800 border border-terminal-300 hover:bg-terminal-200 hover:border-terminal-400 transition-colors text-sm font-medium;
   }
 
   .terminal-btn-primary {
-    @apply bg-terminal-100 text-terminal-900 border border-terminal-100 hover:bg-terminal-300 transition-colors text-sm font-medium;
+    @apply bg-terminal-800 text-white border border-terminal-800 hover:bg-terminal-700 transition-colors text-sm font-medium;
   }
 
   .terminal-tag {

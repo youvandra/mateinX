@@ -18,7 +18,7 @@ export default function ChessBoard({ fen, onMove, disabled, orientation, height 
   };
 
   return (
-    <div className="terminal-border">
+    <div className="border border-terminal-200">
       <Chessboard
         id="matein-board"
         position={fen}
@@ -28,9 +28,8 @@ export default function ChessBoard({ fen, onMove, disabled, orientation, height 
         customBoardStyle={{
           borderRadius: '0px',
         }}
-        customDarkSquareStyle={{ backgroundColor: '#262626' }}
-        customLightSquareStyle={{ backgroundColor: '#171717' }}
-        customPieces={{}}
+        customDarkSquareStyle={{ backgroundColor: '#b58863' }}
+        customLightSquareStyle={{ backgroundColor: '#f0d9b5' }}
         arePiecesDraggable={!disabled}
       />
     </div>
