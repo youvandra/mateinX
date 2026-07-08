@@ -56,7 +56,7 @@ export function validateSolution(
   const expectedGame = new Chess(puzzleFen);
   for (let i = 0; i < allMoves.length; i++) {
     try {
-      expectedGame.move(allMoves[i], { strict: true });
+      expectedGame.move(allMoves[i]);
       expected.push(expectedGame.history().pop()!);
     } catch {
       expected.push(allMoves[i]);
@@ -70,26 +70,24 @@ export function validateSolution(
     const raw = userMoves[i];
 
     try {
-      const result = game.move(raw, { strict: true });
+      const result = game.move(raw);
       played.push(result.san);
-
-      if (i >= expected.length) {
-        continue;
-      }
-
-      if (result.san !== expected[i]) {
-        return {
-          correct: false,
-          solution: played,
-          expected,
-        };
-      }
     } catch {
       return {
         correct: false,
         solution: played,
         expected,
         illegal_move: raw,
+      };
+    }
+  }
+
+  for (let i = 0; i < expected.length && i < played.length; i++) {
+    if (played[i] !== expected[i]) {
+      return {
+        correct: false,
+        solution: played,
+        expected,
       };
     }
   }
