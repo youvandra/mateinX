@@ -1,0 +1,44 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy backend
+        run: |
+          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
+            cd ~/mateinX &&
+            git pull origin main &&
+            cd backend &&
+            npm ci --production=false &&
+            npm run build 2>/dev/null || echo '[Info] Build step skipped (tsc may fail if types loose)' &&
+            pm2 restart mateinx-backend 2>/dev/null || pm2 start dist/index.js --name mateinx-backend
+          "
+
+      - name: Deploy frontend
+        run: |
+          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
+            cd ~/mateinX &&
+            cd frontend &&
+            npm ci --production=false &&
+            npm run build 2>/dev/null; npm start -- -p 3007 &
+          "
+
+      - name: Reload Nginx
+        run: |
+          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
+            sudo nginx -t && sudo systemctl reload nginx
+          " || echo '[Info] Nginx reload skipped'

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.next/
+.env
+*.db
+*.sqlite
+data/*.csv
+data/*.pgn
+.DS_Store
+*.log
