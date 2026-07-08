@@ -12,9 +12,23 @@ export default function PuzzleSlideshow() {
   const [slides, setSlides] = useState<PuzzleSlide[]>([]);
   const [current, setCurrent] = useState(0);
   const [animate, setAnimate] = useState(false);
+  const [boardWidth, setBoardWidth] = useState(480);
   const fetching = useRef(false);
 
   const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006';
+
+  useEffect(() => {
+    const updateWidth = () => {
+      const container = document.getElementById('slideshow-container');
+      if (container) {
+        const width = Math.min(container.offsetWidth, 480);
+        setBoardWidth(width);
+      }
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   const fetchNext = async () => {
     if (fetching.current) return;
@@ -72,7 +86,7 @@ export default function PuzzleSlideshow() {
 
   if (slides.length === 0) {
     return (
-      <div className="flex items-center justify-center" style={{ width: 480, height: 480 }}>
+      <div className="flex items-center justify-center" style={{ width: '100%', height: boardWidth }}>
         <p className="text-terminal-400 text-sm font-mono">loading...</p>
       </div>
     );
@@ -81,7 +95,7 @@ export default function PuzzleSlideshow() {
   const slide = slides[current % Math.max(slides.length, 1)];
 
   return (
-    <div className="w-full max-w-[480px] mx-auto">
+    <div id="slideshow-container" className="w-full max-w-[480px] mx-auto">
       <div
         className={animate ? 'animate-swap' : ''}
         onAnimationEnd={() => setAnimate(false)}
@@ -89,7 +103,7 @@ export default function PuzzleSlideshow() {
         <Chessboard
           id="puzzle-slideshow"
           position={slide.fen}
-          boardWidth={480}
+          boardWidth={boardWidth}
           arePiecesDraggable={false}
           customBoardStyle={{ borderRadius: '0px' }}
           customDarkSquareStyle={{ backgroundColor: '#b58863' }}

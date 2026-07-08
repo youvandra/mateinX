@@ -70,7 +70,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6" style={{ paddingTop: '5rem' }}>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-4 sm:space-y-6" style={{ paddingTop: '5rem' }}>
       <div className="flex items-center gap-2">
         <img src="/Logo.svg" alt="" className="h-5 w-5" />
         <h1 className="text-base font-bold text-terminal-800 uppercase tracking-wider">Dashboard</h1>
@@ -87,7 +87,7 @@ export default function Dashboard() {
       </div>
 
       {stats && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
           <StatCard label="solved" value={stats.total_solved} />
           <StatCard label="failed" value={stats.total_failed} />
           <StatCard label="earned" value={`${stats.total_earned.toFixed(2)} USDT`} />
@@ -112,7 +112,7 @@ export default function Dashboard() {
                   <th className="text-left p-3 font-medium">puzzle</th>
                   <th className="text-left p-3 font-medium">status</th>
                   <th className="text-right p-3 font-medium">reward</th>
-                  <th className="text-right p-3 font-medium">date</th>
+                  <th className="text-right p-3 font-medium hidden sm:table-cell">date</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-terminal-100">
@@ -129,7 +129,7 @@ export default function Dashboard() {
                       </span>
                     </td>
                     <td className="p-3 text-right text-terminal-700">{game.reward.toFixed(2)} USDT</td>
-                    <td className="p-3 text-right text-terminal-400 text-[10px]">{new Date(game.created_at).toLocaleDateString()}</td>
+                    <td className="p-3 text-right text-terminal-400 text-[10px] hidden sm:table-cell">{new Date(game.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>

@@ -99,7 +99,7 @@ export default function GameDetail() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-4" style={{ paddingTop: '5rem' }}>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-4" style={{ paddingTop: '5rem' }}>
       <div className="flex items-center gap-3 text-xs font-mono">
         <a href="/dashboard" className="text-terminal-500 hover:text-terminal-800 transition-colors">
           {'<- back'}
@@ -107,12 +107,12 @@ export default function GameDetail() {
         <span className={`px-1.5 py-0.5 text-[10px] border ${statusColors[game.status] || 'border-terminal-300 text-terminal-500'}`}>
           {game.status}
         </span>
-        <span className="text-terminal-400 text-[10px]">#{game.id.slice(0, 8)}</span>
+        <span className="text-terminal-400 text-[10px] hidden sm:inline">#{game.id.slice(0, 8)}</span>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <div className="border border-terminal-200">
+          <div className="border border-terminal-200 overflow-x-auto">
             <Chessboard
               id="game-detail-board"
               position={fenHistory[currentMoveIndex]}
