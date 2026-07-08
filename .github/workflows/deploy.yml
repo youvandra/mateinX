@@ -20,25 +20,26 @@ jobs:
       - name: Deploy backend
         run: |
           ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
-            cd ~/mateinX &&
-            git pull origin main &&
-            cd backend &&
-            npm ci --production=false &&
-            npm run build 2>/dev/null || echo '[Info] Build step skipped (tsc may fail if types loose)' &&
-            pm2 restart mateinx-backend 2>/dev/null || pm2 start dist/index.js --name mateinx-backend
+            set -e
+            cd ~/mateinX
+            git pull origin main
+            cd backend
+            npm ci
+            pm2 restart mateinx-backend
           "
 
       - name: Deploy frontend
         run: |
           ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
-            cd ~/mateinX &&
-            cd frontend &&
-            npm ci --production=false &&
-            npm run build 2>/dev/null; npm start -- -p 3007 &
+            set -e
+            cd ~/mateinX/frontend
+            npm ci
+            npm run build
+            pm2 restart mateinx-frontend
           "
 
       - name: Reload Nginx
         run: |
           ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
-            sudo nginx -t && sudo systemctl reload nginx
-          " || echo '[Info] Nginx reload skipped'
+            sudo nginx -t && sudo systemctl reload nginx || true
+          "
