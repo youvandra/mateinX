@@ -11,18 +11,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen bg-terminal-50 text-terminal-800">
-        <nav className="border-b border-terminal-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2">
-              <img src="/Logo.svg" alt="mateinX" className="h-6 w-6" />
-              <span className="text-sm font-bold text-terminal-800 tracking-tight">
+        <nav className="border-b border-terminal-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+          <div className="w-full px-6 h-16 flex items-center justify-between">
+            <a href="/" className="flex items-center gap-2.5">
+              <img src="/Logo.svg" alt="mateinX" className="h-7 w-7" />
+              <span className="text-base font-bold text-terminal-800 tracking-tight">
                 mateinX
               </span>
             </a>
-            <div className="flex gap-5 text-xs font-medium text-terminal-500 uppercase tracking-wider">
+            <div className="flex items-center gap-6 text-sm font-medium text-terminal-500">
               <a href="/dashboard" className="hover:text-terminal-800 transition-colors">Dashboard</a>
               <a href="/leaderboard" className="hover:text-terminal-800 transition-colors">Leaderboard</a>
-              <a href="https://okx.ai" target="_blank" rel="noreferrer" className="hover:text-terminal-800 transition-colors">OKX.AI</a>
+              <a
+                href="https://okx.ai/agents"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-terminal-800 hover:bg-terminal-700 transition-colors border border-terminal-800"
+              >
+                Try on OKX.AI
+              </a>
             </div>
           </div>
         </nav>
