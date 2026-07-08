@@ -140,51 +140,45 @@ export default function MiniGame() {
 
   if (loading && !puzzle) {
     return (
-      <div className="max-w-md mx-auto border border-terminal-200 bg-white p-8 text-center">
+      <div className="border border-terminal-200 bg-white p-8 text-center">
         <p className="text-terminal-400 text-sm font-mono">loading puzzle...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-md mx-auto">
-      <div className="relative border border-terminal-200 bg-white overflow-hidden">
-        {showAnimation && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center bg-green-50/90 animate-fadeIn">
-            <div className="text-center animate-bounceIn">
-              <div className="text-5xl mb-2">🎉</div>
-              <p className="text-green-700 font-bold text-lg font-mono">SOLVED!</p>
-              <p className="text-green-600 text-xs font-mono mt-1">loading next puzzle...</p>
-            </div>
-          </div>
-        )}
-
-        <div className="p-4 border-b border-terminal-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-terminal-400">mini puzzle</span>
-              <span className="text-[10px] font-mono text-green-600 border border-green-200 bg-green-50 px-1.5 py-0.5">easy</span>
-            </div>
-            <button
-              onClick={handleNext}
-              className="text-[10px] font-mono text-terminal-400 hover:text-terminal-700 transition-colors border border-terminal-200 px-2 py-0.5"
-            >
-              skip &rarr;
-            </button>
+    <div className="relative border border-terminal-200 bg-white overflow-hidden">
+      {showAnimation && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-green-50/90 animate-fadeIn">
+          <div className="text-center animate-bounceIn">
+            <div className="text-5xl mb-2">🎉</div>
+            <p className="text-green-700 font-bold text-lg font-mono">SOLVED!</p>
+            <p className="text-green-600 text-xs font-mono mt-1">loading next puzzle...</p>
           </div>
         </div>
+      )}
 
-        <div className={solved ? 'opacity-50 pointer-events-none' : ''}>
-          <Chessboard
-            id="mini-game-board"
-            position={startFen || 'start'}
-            onPieceDrop={handleDrop}
-            boardWidth={380}
-            customBoardStyle={{ borderRadius: '0px' }}
-            customDarkSquareStyle={{ backgroundColor: '#739552' }}
-            customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
-          />
-        </div>
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-terminal-200">
+        <span className="text-[10px] font-mono text-green-600 border border-green-200 bg-green-50 px-1.5 py-0.5">easy</span>
+        <button
+          onClick={handleNext}
+          className="text-[10px] font-mono text-terminal-400 hover:text-terminal-700 transition-colors"
+        >
+          skip &rarr;
+        </button>
+      </div>
+
+      <div className={solved ? 'opacity-50 pointer-events-none' : ''}>
+        <Chessboard
+          id="mini-game-board"
+          position={startFen || 'start'}
+          onPieceDrop={handleDrop}
+          boardWidth={400}
+          customBoardStyle={{ borderRadius: '0px' }}
+          customDarkSquareStyle={{ backgroundColor: '#739552' }}
+          customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
+        />
+      </div>
 
         <div className="p-3 border-t border-terminal-200">
           <div className="flex items-center justify-between">

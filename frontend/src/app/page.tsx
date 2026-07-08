@@ -50,17 +50,30 @@ export default function Home() {
       <section className="border-b border-terminal-200">
         <ScrollReveal>
           <div className="max-w-6xl mx-auto px-6 py-20">
-            <div className="text-center mb-10">
-              <p className="text-xs font-mono text-terminal-400 uppercase tracking-widest mb-2">Try It Now</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-terminal-900">
-                Solve a Puzzle
-              </h2>
-              <p className="text-terminal-600 mt-2 max-w-xl mx-auto">
-                Drag pieces to make your moves. Submit when ready — new puzzle
-                appears on each solve.
-              </p>
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-xs font-mono text-terminal-400 uppercase tracking-widest mb-2">Try It Now</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-terminal-900 leading-tight">
+                  Solve a Puzzle
+                </h2>
+                <p className="text-terminal-600 mt-4 leading-relaxed">
+                  Drag pieces on the board to make your moves. Submit when you think
+                  you&apos;ve found the winning sequence. A new puzzle loads automatically
+                  on each solve.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-8">
+                  <a
+                    href="/dashboard"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+                  >
+                    ♟ Go to Dashboard
+                  </a>
+                </div>
+              </div>
+              <div>
+                <MiniGame />
+              </div>
             </div>
-            <MiniGame />
           </div>
         </ScrollReveal>
       </section>
