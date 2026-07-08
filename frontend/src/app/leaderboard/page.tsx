@@ -33,43 +33,43 @@ export default function Leaderboard() {
   }, []);
 
   return (
-    <div className="pt-20 max-w-6xl mx-auto px-6 pb-12">
-      <div className="flex items-center gap-3 mb-8">
-        <h1 className="text-xl font-bold text-white">Leaderboard</h1>
-        <span className="text-xs font-mono text-[#34d399] bg-[#34d399]/10 border border-[#34d399]/20 px-2 py-0.5 rounded-full">
-          $ rankings
-        </span>
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <div className="flex items-center gap-2">
+        <img src="/Logo.svg" alt="" className="h-5 w-5" />
+        <h1 className="text-base font-bold text-terminal-800 uppercase tracking-wider">Leaderboard</h1>
       </div>
-      <p className="text-[#737373] text-sm mb-8 font-mono">// top solvers ranked by puzzles solved and earnings</p>
+      <p className="text-terminal-500 text-xs font-mono">{`// top solvers ranked by puzzles solved and earnings`}</p>
 
-      <div className="border border-[#1a1a1a] rounded-lg overflow-hidden">
+      <div className="border border-terminal-200">
         {loading ? (
-          <div className="p-6 text-center text-sm text-[#525252] font-mono">loading...</div>
+          <p className="p-4 text-terminal-400 text-xs font-mono">$ loading...</p>
         ) : entries.length === 0 ? (
-          <div className="p-6 text-center text-sm text-[#525252] font-mono">no data yet</div>
+          <p className="p-4 text-terminal-400 text-xs font-mono">$ no data yet</p>
         ) : (
-          <table className="w-full text-sm">
+          <table className="w-full text-xs font-mono">
             <thead>
-              <tr className="border-b border-[#1a1a1a] text-[#737373] bg-[#0d0d0d]">
-                <th className="text-left px-4 py-3 font-medium w-10">#</th>
-                <th className="text-left px-4 py-3 font-medium">solver</th>
-                <th className="text-center px-4 py-3 font-medium">solved</th>
-                <th className="text-center px-4 py-3 font-medium">failed</th>
-                <th className="text-right px-4 py-3 font-medium">earned</th>
-                <th className="text-center px-4 py-3 font-medium">streak</th>
+              <tr className="border-b border-terminal-200 text-terminal-500 bg-terminal-50">
+                <th className="text-left p-3 font-medium w-10">#</th>
+                <th className="text-left p-3 font-medium">solver</th>
+                <th className="text-center p-3 font-medium">solved</th>
+                <th className="text-center p-3 font-medium">failed</th>
+                <th className="text-right p-3 font-medium">earned</th>
+                <th className="text-center p-3 font-medium">streak</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1a1a1a]">
+            <tbody className="divide-y divide-terminal-100">
               {entries.map((entry, i) => (
-                <tr key={entry.user_address} className="hover:bg-[#141414] transition-colors">
-                  <td className="px-4 py-3 font-bold text-[#525252]">{i + 1}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-[#a3a3a3]">
+                <tr key={entry.user_address} className="hover:bg-terminal-50 transition-colors">
+                  <td className="p-3 font-bold text-terminal-400">{i + 1}</td>
+                  <td className="p-3 text-terminal-600 text-[10px]">
                     {entry.user_address.slice(0, 6)}...{entry.user_address.slice(-4)}
                   </td>
-                  <td className="px-4 py-3 text-center text-[#34d399]">{entry.total_solved}</td>
-                  <td className="px-4 py-3 text-center text-red-400">{entry.total_failed}</td>
-                  <td className="px-4 py-3 text-right text-white font-mono">{entry.total_earned.toFixed(2)} USDT</td>
-                  <td className="px-4 py-3 text-center text-[#fbbf24]">{entry.current_streak}</td>
+                  <td className="p-3 text-center text-green-600">{entry.total_solved}</td>
+                  <td className="p-3 text-center text-red-500">{entry.total_failed}</td>
+                  <td className="p-3 text-right text-terminal-800 font-medium">{entry.total_earned.toFixed(2)} USDT</td>
+                  <td className="p-3 text-center">
+                    <span className="text-amber-600 text-[10px]">{entry.current_streak}</span>
+                  </td>
                 </tr>
               ))}
             </tbody>

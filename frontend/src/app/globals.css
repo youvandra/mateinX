@@ -2,21 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  --foreground: #e5e5e5;
-  --background: #0a0a0a;
-  --accent: #34d399;
-  --accent-gradient: linear-gradient(to right, #34d399, #67e8f9);
-  --muted: #525252;
-  --card-bg: #141414;
-  --border: #262626;
+  --foreground: #171717;
+  --background: #fafafa;
+  --accent: #171717;
+  --muted: #a3a3a3;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #262626 #0a0a0a;
+  scrollbar-color: #d4d4d4 #fafafa;
 }
 
 *::-webkit-scrollbar {
@@ -24,36 +21,47 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #fafafa;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #d4d4d4;
   border-radius: 3px;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Geist', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', 'Monaco', 'Consolas', monospace;
 }
 
 ::selection {
-  background: #34d399;
-  color: #0a0a0a;
+  background: #171717;
+  color: #fafafa;
 }
 
 @layer utilities {
-  .text-gradient {
-    background: linear-gradient(to right, #34d399, #67e8f9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .terminal-border {
+    @apply border border-terminal-300;
   }
 
-  .border-gradient {
-    border-image: linear-gradient(to right, #34d399, #67e8f9) 1;
+  .terminal-card {
+    @apply bg-white rounded-none terminal-border;
+  }
+
+  .terminal-input {
+    @apply bg-white text-terminal-800 border border-terminal-300 focus:border-terminal-600 focus:outline-none px-3 py-2 text-sm;
+  }
+
+  .terminal-btn {
+    @apply bg-terminal-100 text-terminal-800 border border-terminal-300 hover:bg-terminal-200 hover:border-terminal-400 transition-colors text-sm font-medium;
+  }
+
+  .terminal-btn-primary {
+    @apply bg-terminal-800 text-white border border-terminal-800 hover:bg-terminal-700 transition-colors text-sm font-medium;
+  }
+
+  .terminal-tag {
+    @apply px-2 py-0.5 text-xs border;
   }
 }

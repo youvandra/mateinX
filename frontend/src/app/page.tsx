@@ -1,130 +1,167 @@
 export default function Home() {
   return (
     <div>
-      {/* Nav Spacer */}
-      <div className="h-14" />
-
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-[#1a1a1a]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#34d399]/5 via-transparent to-transparent pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 relative">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono text-[#34d399] bg-[#34d399]/10 border border-[#34d399]/20 rounded-full mb-6">
-              Agentic Service Provider on OKX.AI
-            </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
-              Solve Chess Puzzles,<br />
-              <span className="text-gradient">Earn Crypto Rewards</span>
-            </h1>
-            <p className="text-base md:text-lg text-[#a3a3a3] mt-4 max-w-2xl leading-relaxed">
-              Generate a chess puzzle at your chosen difficulty, find the winning
-              sequence, and earn USDT when you solve it — all handled automatically
-              through the OKX Agent Payments Protocol.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-8">
-              <a
-                href="/dashboard"
-                className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-black bg-white hover:bg-[#e5e5e5] transition-colors rounded-lg"
-              >
-                Start Solving
-              </a>
-              <a
-                href="https://okx.ai"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-[#a3a3a3] border border-[#262626] hover:border-[#404040] hover:text-white transition-colors rounded-lg"
-              >
-                Learn about OKX.AI
-              </a>
-            </div>
+      <section
+        className="relative min-h-[65vh] flex items-center border-b border-terminal-200"
+        style={{
+          backgroundImage: 'url(/Hero.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-white/70" />
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16">
+          <img src="/Logo.svg" alt="mateinX" className="h-10 w-10 mb-4" />
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-terminal-900 leading-tight">
+            Solve Chess Puzzles,<br />
+            <span className="text-terminal-600">Earn Crypto Rewards</span>
+          </h1>
+          <p className="text-base md:text-lg text-terminal-700 mt-4 max-w-2xl leading-relaxed">
+            An Agentic Service Provider on OKX.AI. Generate a chess puzzle at your
+            chosen difficulty, find the winning sequence, and earn USDT when you
+            solve it — all handled automatically through the OKX Agent Payments Protocol.
+          </p>
+
+          <div className="flex flex-wrap gap-3 mt-8">
+            <a
+              href="/dashboard"
+              className="inline-block px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+            >
+              $ start_solving
+            </a>
+            <a
+              href="https://okx.ai"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
+            >
+              $ learn_about_OKX.AI
+            </a>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mt-8 text-sm font-mono">
+            <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
+              100,000+ puzzles
+            </span>
+            <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
+              x402 payments
+            </span>
+            <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
+              instant USDT rewards
+            </span>
+            <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
+              open on OKX.AI
+            </span>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="border-b border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto px-6 py-20 md:py-24">
+      <section className="border-b border-terminal-200">
+        <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white">
-              How It Works
+            <p className="text-xs font-mono text-terminal-400 uppercase tracking-widest mb-2">How It Works</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-terminal-900">
+              Play. Solve. Earn.
             </h2>
-            <p className="text-[#a3a3a3] mt-2 max-w-xl mx-auto">
-              Three simple steps to start earning with your chess skills.
+            <p className="text-terminal-600 mt-2 max-w-xl mx-auto">
+              Three simple steps to start earning USDT with your chess skills.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              {
-                num: '01',
-                title: 'Pick Your Difficulty',
-                desc: 'Choose from Easy, Medium, Hard, or Grandmaster. Higher difficulty means bigger rewards.',
-              },
-              {
-                num: '02',
-                title: 'Solve the Puzzle',
-                desc: 'Pay a small entry fee via the OKX Agent Payments Protocol. Find the winning move sequence and submit.',
-              },
-              {
-                num: '03',
-                title: 'Get Rewarded',
-                desc: 'Solve it correctly and USDT is automatically sent to your wallet. Wrong? Try again — no hard feelings.',
-              },
-            ].map((step) => (
-              <div
-                key={step.num}
-                className="group relative p-6 rounded-lg border border-[#1a1a1a] bg-[#0d0d0d] hover:border-[#262626] transition-colors"
-              >
-                <div className="text-xs font-mono text-[#34d399] mb-3">{step.num}</div>
-                <h3 className="text-base font-semibold text-white mb-2">{step.title}</h3>
-                <p className="text-sm text-[#737373] leading-relaxed">{step.desc}</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="border border-terminal-200 bg-white p-8 text-center">
+              <div className="w-12 h-12 border border-terminal-300 bg-terminal-50 flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl font-bold text-terminal-700">01</span>
               </div>
-            ))}
+              <h3 className="text-lg font-bold text-terminal-900 mb-3">Pick Your Difficulty</h3>
+              <p className="text-terminal-600 text-sm leading-relaxed">
+                Choose from Easy, Medium, Hard, or Grandmaster. Higher difficulty means
+                bigger rewards.
+              </p>
+            </div>
+
+            <div className="border border-terminal-200 bg-white p-8 text-center">
+              <div className="w-12 h-12 border border-terminal-300 bg-terminal-50 flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl font-bold text-terminal-700">02</span>
+              </div>
+              <h3 className="text-lg font-bold text-terminal-900 mb-3">Solve the Puzzle</h3>
+              <p className="text-terminal-600 text-sm leading-relaxed">
+                Pay a small entry fee via the OKX Agent Payments Protocol. Find the
+                winning move sequence and submit your solution.
+              </p>
+            </div>
+
+            <div className="border border-terminal-200 bg-white p-8 text-center">
+              <div className="w-12 h-12 border border-terminal-300 bg-terminal-50 flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl font-bold text-terminal-700">03</span>
+              </div>
+              <h3 className="text-lg font-bold text-terminal-900 mb-3">Get Rewarded</h3>
+              <p className="text-terminal-600 text-sm leading-relaxed">
+                Solve it correctly and USDT is automatically sent to your wallet.
+                Wrong? Try a new puzzle — no hard feelings.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-10">
+            <a
+              href="/dashboard"
+              className="inline-block px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+            >
+              $ start_solving
+            </a>
           </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="border-b border-[#1a1a1a]">
+      <section className="border-b border-terminal-200 bg-terminal-50">
         <div className="max-w-6xl mx-auto px-6 py-16">
-          <div className="grid md:grid-cols-4 gap-4">
-            {[
-              { value: '100K+', label: 'curated puzzles' },
-              { value: 'x402', label: 'payment protocol' },
-              { value: 'USDT', label: 'instant rewards' },
-              { value: 'Live', label: 'on OKX.AI' },
-            ].map((stat) => (
-              <div key={stat.value} className="text-center p-6 rounded-lg border border-[#1a1a1a] bg-[#0d0d0d]">
-                <div className="text-2xl font-bold text-white">{stat.value}</div>
-                <div className="text-sm text-[#737373] font-mono mt-1">{stat.label}</div>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-4 gap-6 text-center">
+            <div>
+              <p className="text-3xl font-bold text-terminal-900">100K+</p>
+              <p className="text-terminal-600 text-sm font-mono mt-1">curated puzzles</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-terminal-900">x402</p>
+              <p className="text-terminal-600 text-sm font-mono mt-1">payment protocol</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-terminal-900">USDT</p>
+              <p className="text-terminal-600 text-sm font-mono mt-1">instant rewards</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-terminal-900">Open</p>
+              <p className="text-terminal-600 text-sm font-mono mt-1">on OKX.AI</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-24">
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-terminal-900">
             Ready to Play?
           </h2>
-          <p className="text-[#a3a3a3] mt-2 max-w-lg mx-auto">
-            Connect your XLayer wallet and start solving. Every correct solution
-            earns USDT directly to your wallet.
+          <p className="text-terminal-600 mt-3 max-w-xl mx-auto">
+            Connect your XLayer wallet and start solving puzzles. Every correct
+            solution earns USDT directly to your wallet.
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-8">
             <a
               href="/dashboard"
-              className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-black bg-white hover:bg-[#e5e5e5] transition-colors rounded-lg"
+              className="inline-block px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
             >
-              Go to Dashboard
+              $ go_to_dashboard
             </a>
             <a
               href="/leaderboard"
-              className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-[#a3a3a3] border border-[#262626] hover:border-[#404040] hover:text-white transition-colors rounded-lg"
+              className="inline-block px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
             >
-              View Leaderboard
+              $ view_leaderboard
             </a>
           </div>
         </div>

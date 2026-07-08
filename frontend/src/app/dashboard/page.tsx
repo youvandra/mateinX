@@ -63,86 +63,73 @@ export default function Dashboard() {
   }, [address]);
 
   const statusColors: Record<string, string> = {
-    active: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
-    solved: 'text-green-400 border-green-500/30 bg-green-500/10',
-    failed: 'text-red-400 border-red-500/30 bg-red-500/10',
-    pending: 'text-[#737373] border-[#262626] bg-[#1a1a1a]',
+    active: 'border-blue-500 text-blue-600',
+    solved: 'border-green-500 text-green-600',
+    failed: 'border-red-500 text-red-600',
+    pending: 'border-terminal-300 text-terminal-500',
   };
 
-  const statCards = stats
-    ? [
-        { label: 'Solved', value: stats.total_solved },
-        { label: 'Failed', value: stats.total_failed },
-        { label: 'Earned', value: `${stats.total_earned.toFixed(2)} USDT` },
-        { label: 'Streak', value: stats.current_streak },
-        { label: 'Best', value: stats.best_streak },
-      ]
-    : [];
-
   return (
-    <div className="pt-20 max-w-6xl mx-auto px-6 pb-12">
-      <div className="flex items-center gap-3 mb-8">
-        <h1 className="text-xl font-bold text-white">Dashboard</h1>
-        <span className="text-xs font-mono text-[#34d399] bg-[#34d399]/10 border border-[#34d399]/20 px-2 py-0.5 rounded-full">
-          $ status
-        </span>
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <div className="flex items-center gap-2">
+        <img src="/Logo.svg" alt="" className="h-5 w-5" />
+        <h1 className="text-base font-bold text-terminal-800 uppercase tracking-wider">Dashboard</h1>
       </div>
 
-      <div className="max-w-md mb-8">
+      <div className="max-w-md">
         <input
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          placeholder="0x... (wallet address)"
-          className="w-full px-3 py-2 text-sm bg-[#141414] border border-[#262626] rounded-lg text-[#e5e5e5] placeholder-[#525252] focus:outline-none focus:border-[#34d399]/50 font-mono"
+          placeholder="0x..."
+          className="w-full terminal-input font-mono text-xs"
         />
       </div>
 
       {stats && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
-          {statCards.map((s) => (
-            <div key={s.label} className="border border-[#1a1a1a] bg-[#0d0d0d] rounded-lg p-4">
-              <div className="text-xs text-[#737373] font-mono">{s.label}</div>
-              <div className="text-lg font-bold text-white mt-1">{s.value}</div>
-            </div>
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <StatCard label="solved" value={stats.total_solved} />
+          <StatCard label="failed" value={stats.total_failed} />
+          <StatCard label="earned" value={`${stats.total_earned.toFixed(2)} USDT`} />
+          <StatCard label="streak" value={stats.current_streak} />
+          <StatCard label="best" value={stats.best_streak} />
         </div>
       )}
 
-      <div className="border border-[#1a1a1a] rounded-lg overflow-hidden">
-        <div className="text-xs text-[#737373] font-mono border-b border-[#1a1a1a] px-4 py-3 bg-[#0d0d0d]">
-          // game history ({games.length})
-        </div>
+      <div className="border border-terminal-200">
+        <p className="text-xs text-terminal-500 border-b border-terminal-200 p-3 font-mono bg-terminal-50">
+          {`// game history (${games.length})`}
+        </p>
         {loading ? (
-          <div className="p-6 text-center text-sm text-[#525252] font-mono">loading...</div>
+          <p className="p-4 text-terminal-400 text-xs font-mono">$ loading...</p>
         ) : games.length === 0 ? (
-          <div className="p-6 text-center text-sm text-[#525252] font-mono">no games found</div>
+          <p className="p-4 text-terminal-400 text-xs font-mono">$ no games found</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-xs font-mono">
               <thead>
-                <tr className="border-b border-[#1a1a1a] text-[#737373]">
-                  <th className="text-left px-4 py-3 font-medium">puzzle</th>
-                  <th className="text-left px-4 py-3 font-medium">status</th>
-                  <th className="text-right px-4 py-3 font-medium">reward</th>
-                  <th className="text-right px-4 py-3 font-medium">date</th>
+                <tr className="border-b border-terminal-200 text-terminal-500">
+                  <th className="text-left p-3 font-medium">puzzle</th>
+                  <th className="text-left p-3 font-medium">status</th>
+                  <th className="text-right p-3 font-medium">reward</th>
+                  <th className="text-right p-3 font-medium">date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1a1a1a]">
+              <tbody className="divide-y divide-terminal-100">
                 {games.map((game) => (
                   <tr
                     key={game.id}
-                    className="hover:bg-[#141414] cursor-pointer transition-colors"
+                    className="hover:bg-terminal-50 cursor-pointer transition-colors"
                     onClick={() => window.location.href = `/games/${game.id}`}
                   >
-                    <td className="px-4 py-3 font-mono text-xs text-[#737373]">{game.puzzle_id.slice(0, 10)}</td>
-                    <td className="px-4 py-3">
-                      <span className={`inline-flex px-2 py-0.5 text-xs font-mono border rounded ${statusColors[game.status] || 'text-[#737373] border-[#262626] bg-[#1a1a1a]'}`}>
+                    <td className="p-3 text-terminal-500 text-[10px]">{game.puzzle_id.slice(0, 10)}</td>
+                    <td className="p-3">
+                      <span className={`inline-block px-1.5 py-0.5 text-[10px] border ${statusColors[game.status] || 'border-terminal-300 text-terminal-500'}`}>
                         {game.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-right text-white font-mono">{game.reward.toFixed(2)} USDT</td>
-                    <td className="px-4 py-3 text-right text-[#525252] text-xs font-mono">{new Date(game.created_at).toLocaleDateString()}</td>
+                    <td className="p-3 text-right text-terminal-700">{game.reward.toFixed(2)} USDT</td>
+                    <td className="p-3 text-right text-terminal-400 text-[10px]">{new Date(game.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -150,6 +137,15 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function StatCard({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="border border-terminal-200 bg-white p-3">
+      <p className="text-[10px] text-terminal-500 uppercase tracking-wider font-mono">{label}</p>
+      <p className="text-base font-bold text-terminal-800 mt-1 font-mono">{value}</p>
     </div>
   );
 }
