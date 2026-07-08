@@ -24,27 +24,13 @@ export function generatePuzzle(difficulty: string): PuzzleResponse | null {
   const moves = puzzle.moves.split(' ');
   const reward = getRewardForDifficulty(puzzle.difficulty);
 
-  const startFen = getStartFen(puzzle.fen, moves.slice(0, -1));
-
   return {
     puzzleId: puzzle.id,
-    fen: startFen,
+    fen: puzzle.fen,
     difficulty: puzzle.difficulty,
     reward,
     totalMoves: moves.length,
   };
-}
-
-function getStartFen(baseFen: string, preMoves: string[]): string {
-  const game = new Chess(baseFen);
-  for (const move of preMoves) {
-    try {
-      game.move(move);
-    } catch {
-      break;
-    }
-  }
-  return game.fen();
 }
 
 function getRewardForDifficulty(difficulty: string): number {
@@ -65,21 +51,20 @@ export function validateSolution(
   const allMoves = puzzleMoves.split(' ');
   const userMoves = userSolution.split(' ').filter(Boolean);
 
-  const game = new Chess(puzzleFen);
-  const checkGame = new Chess(puzzleFen);
-
-  let allCorrect = true;
   const expected: string[] = [];
-  const played: string[] = [];
 
+  const expectedGame = new Chess(puzzleFen);
   for (let i = 0; i < allMoves.length; i++) {
     try {
-      checkGame.move(allMoves[i]);
-      expected.push(checkGame.history().pop()!);
+      expectedGame.move(allMoves[i], { strict: true });
+      expected.push(expectedGame.history().pop()!);
     } catch {
       expected.push(allMoves[i]);
     }
   }
+
+  const game = new Chess(puzzleFen);
+  const played: string[] = [];
 
   for (let i = 0; i < userMoves.length; i++) {
     const raw = userMoves[i];
@@ -88,27 +73,29 @@ export function validateSolution(
       const result = game.move(raw, { strict: true });
       played.push(result.san);
 
-      if (i >= allMoves.length) {
-        allCorrect = false;
+      if (i >= expected.length) {
         continue;
       }
 
       if (result.san !== expected[i]) {
-        allCorrect = false;
+        return {
+          correct: false,
+          solution: played,
+          expected,
+        };
       }
     } catch {
       return {
         correct: false,
-        solution: [...played, raw],
+        solution: played,
         expected,
         illegal_move: raw,
       };
     }
   }
 
-  if (userMoves.length < allMoves.length) {
-    allCorrect = false;
-  }
+  const allCorrect = played.length === expected.length &&
+    played.every((m, i) => m === expected[i]);
 
   return {
     correct: allCorrect,

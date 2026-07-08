@@ -1,5 +1,4 @@
 import { Router, Request, Response } from 'express';
-import { Chess } from 'chess.js';
 import { generatePuzzle, validateSolution, getEntryFeeForDifficulty } from '../chess/engine';
 import { createGame, getGame, solveGame, failGame, setRewardTx, getGamesByUser, getGameDetail } from '../db/games';
 import { getLeaderboard, getUserStats, recordSolve, recordFail } from '../db/leaderboard';
@@ -82,13 +81,12 @@ router.post('/v1/puzzle/confirm', (req: Request, res: Response) => {
     });
   }
 
-  const fenStart = getPuzzleStartFen(puzzle.fen, puzzle.moves);
   const game = createGame(puzzle_id, user_address, entryFee, reward, payment_tx);
 
   return res.json({
     game_id: game.id,
     puzzle_id,
-    fen: fenStart,
+    fen: puzzle.fen,
     difficulty: puzzle.difficulty,
     reward,
     total_moves: puzzle.moves.split(' ').length,
@@ -136,15 +134,14 @@ router.post('/v1/solve', (req: Request, res: Response) => {
     return res.status(404).json({ error: 'puzzle_not_found' });
   }
 
-  const fenStart = getPuzzleStartFen(puzzle.fen, puzzle.moves);
-  const result = validateSolution(fenStart, puzzle.moves, solution);
+  const result = validateSolution(puzzle.fen, puzzle.moves, solution);
 
   if (result.illegal_move) {
     return res.json({
       status: 'illegal',
       correct: false,
       game_id,
-      message: `"${result.illegal_move}" is not a legal move. Try again.`,
+      message: `"${result.illegal_move}" is not a legal move in this position.`,
       illegal_move: result.illegal_move,
       legal_moves_so_far: result.solution,
     });
@@ -221,19 +218,6 @@ router.get('/v1/health', (_req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
   });
 });
-
-function getPuzzleStartFen(baseFen: string, moves: string): string {
-  const game = new Chess(baseFen);
-  const moveList = moves.split(' ');
-  for (let i = 0; i < moveList.length - 1; i++) {
-    try {
-      game.move(moveList[i]);
-    } catch {
-      break;
-    }
-  }
-  return game.fen();
-}
 
 function getReward(difficulty: string): number {
   const rewards: Record<string, number> = {

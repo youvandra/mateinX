@@ -42,16 +42,11 @@ export default function GameDetail() {
 
         if (data.game.fen && data.game.puzzle_moves) {
           const allMoves = data.game.puzzle_moves.split(' ');
-          const preMoves = allMoves.slice(0, -1);
-          const chess = new Chess(data.game.fen);
-          for (const m of preMoves) {
-            try { chess.move(m); } catch { break; }
-          }
-          const start = chess.fen();
-          setStartFen(start);
+          setStartFen(data.game.fen);
 
-          const history = [start];
-          const replayChess = new Chess(start);
+          const history = [data.game.fen];
+          const replayChess = new Chess(data.game.fen);
+
           if (data.game.solution) {
             const userMoves = data.game.solution.split(' ').filter(Boolean);
             for (const m of userMoves) {
@@ -62,7 +57,7 @@ export default function GameDetail() {
             }
           }
 
-          const expectedChess = new Chess(start);
+          const expectedChess = new Chess(data.game.fen);
           for (const m of allMoves) {
             try {
               expectedChess.move(m);
@@ -73,7 +68,7 @@ export default function GameDetail() {
           }
 
           setFenHistory(history);
-          setGame_(new Chess(start));
+          setGame_(new Chess(data.game.fen));
         }
       } catch (err) {
         console.error('Failed to fetch game', err);
