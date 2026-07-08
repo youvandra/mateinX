@@ -11,6 +11,7 @@ interface PuzzleSlide {
 export default function PuzzleSlideshow() {
   const [slides, setSlides] = useState<PuzzleSlide[]>([]);
   const [current, setCurrent] = useState(0);
+  const [animate, setAnimate] = useState(false);
   const fetching = useRef(false);
 
   const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006';
@@ -58,11 +59,13 @@ export default function PuzzleSlideshow() {
   useEffect(() => {
     fetchNext();
     const interval = setInterval(() => {
+      setAnimate(true);
       setCurrent(prev => {
         const nextIdx = prev + 1;
         if (nextIdx >= 8) fetchNext();
         return nextIdx;
       });
+      setTimeout(() => setAnimate(false), 500);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -78,15 +81,31 @@ export default function PuzzleSlideshow() {
   const slide = slides[current % Math.max(slides.length, 1)];
 
   return (
-    <Chessboard
-      id="puzzle-slideshow"
-      position={slide.fen}
-      boardWidth={480}
-      arePiecesDraggable={false}
-      animationDuration={400}
-      customBoardStyle={{ borderRadius: '0px' }}
-      customDarkSquareStyle={{ backgroundColor: '#739552' }}
-      customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
-    />
+    <div style={{ width: 480, height: 480 }}>
+      <div
+        className={animate ? 'animate-swap' : ''}
+        onAnimationEnd={() => setAnimate(false)}
+      >
+        <Chessboard
+          id="puzzle-slideshow"
+          position={slide.fen}
+          boardWidth={480}
+          arePiecesDraggable={false}
+          customBoardStyle={{ borderRadius: '0px' }}
+          customDarkSquareStyle={{ backgroundColor: '#739552' }}
+          customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
+        />
+      </div>
+      <style>{`
+        .animate-swap {
+          animation: pieceSwap 0.4s ease-out;
+        }
+        @keyframes pieceSwap {
+          0% { filter: saturate(0.3); }
+          50% { filter: saturate(1.3); }
+          100% { filter: saturate(1); }
+        }
+      `}</style>
+    </div>
   );
 }
