@@ -35,7 +35,7 @@ export default function Leaderboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <img src="/logo.png" alt="" className="h-5 w-5" />
+        <img src="/Logo.svg" alt="" className="h-5 w-5" />
         <h1 className="text-base font-bold text-terminal-800 uppercase tracking-wider">Leaderboard</h1>
       </div>
       <p className="text-terminal-500 text-xs font-mono">{`// top solvers ranked by puzzles solved and earnings`}</p>

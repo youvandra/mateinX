@@ -96,7 +96,7 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-white/60" />
         <div className="relative z-10 px-8 py-12 max-w-2xl">
-          <img src="/logo.png" alt="" className="h-8 w-8 mb-4" />
+          <img src="/Logo.svg" alt="" className="h-8 w-8 mb-4" />
           <h1 className="text-3xl font-bold text-terminal-900 leading-tight">
             Solve Chess Puzzles,
             <br />

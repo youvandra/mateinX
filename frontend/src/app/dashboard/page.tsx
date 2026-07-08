@@ -72,7 +72,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <img src="/logo.png" alt="" className="h-5 w-5" />
+        <img src="/Logo.svg" alt="" className="h-5 w-5" />
         <h1 className="text-base font-bold text-terminal-800 uppercase tracking-wider">Dashboard</h1>
       </div>
 

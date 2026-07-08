@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'mateinX :: solve chess puzzles, earn crypto',
   description: 'An Agentic Service Provider (ASP) on OKX.AI. Solve chess puzzles and earn USDT rewards.',
-  icons: { icon: '/logo.png' },
+  icons: { icon: '/Logo.svg' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="border-b border-terminal-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between">
             <a href="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="mateinX" className="h-6 w-6" />
+              <img src="/Logo.svg" alt="mateinX" className="h-6 w-6" />
               <span className="text-sm font-bold text-terminal-800 tracking-tight">
                 mateinX
               </span>
