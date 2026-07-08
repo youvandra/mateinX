@@ -20,13 +20,13 @@ export default function Home() {
               Solve Chess Puzzles,<br />
               <span className="text-terminal-600">Earn Crypto Rewards</span>
             </h1>
-            <p className="text-base md:text-xl text-terminal-700 mt-6 leading-relaxed">
+            <p className="text-base md:text-xl text-terminal-700 mt-10 leading-relaxed">
               An Agentic Service Provider (ASP) on OKX.AI. Generate a chess puzzle at your
               chosen difficulty, find the winning sequence, and earn USDT when you
               solve it — all handled automatically through the OKX Agent Payments Protocol.
             </p>
 
-            <div className="flex flex-wrap gap-3 mt-12">
+            <div className="flex flex-wrap gap-3 mt-16">
               <a
                 href="/dashboard"
                 className="inline-flex items-center gap-2 px-8 py-3.5 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
