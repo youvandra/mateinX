@@ -25,9 +25,10 @@ export function createGame(
 ): Game {
   const db = getDb();
   const id = uuid();
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
   db.run(
-    'INSERT INTO games (id, puzzle_id, user_address, status, entry_fee, reward, payment_tx) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [id, puzzleId, userAddress, 'active', entryFee, reward, paymentTx]
+    'INSERT INTO games (id, puzzle_id, user_address, status, entry_fee, reward, payment_tx, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [id, puzzleId, userAddress, 'active', entryFee, reward, paymentTx, expiresAt]
   );
   saveDb();
   return getGame(id)!;

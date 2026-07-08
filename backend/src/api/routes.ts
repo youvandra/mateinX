@@ -92,6 +92,7 @@ router.post('/v1/puzzle/confirm', (req: Request, res: Response) => {
     total_moves: puzzle.moves.split(' ').length,
     entry_fee: entryFee,
     status: game.status,
+    expires_at: game.expires_at,
   });
 });
 
