@@ -27,11 +27,12 @@ jobs:
       - name: Deploy frontend
         run: |
           sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SSH_HOST }} "
-            set -e
             cd ~/mateinX/frontend
-            rm -rf .next node_modules
-            npm install --legacy-peer-deps
-            npm install @next/swc-linux-x64-gnu --legacy-peer-deps --no-save 2>/dev/null || true
-            NEXT_PUBLIC_API_URL=http://43.134.86.221:3006 npx next build
-            pm2 restart mateinx-frontend
+            rm -rf .next 2>/dev/null || true
+            rm -rf node_modules 2>/dev/null || (find node_modules -maxdepth 1 -type d -exec rm -rf {} + 2>/dev/null; rm -rf node_modules 2>/dev/null) || true
+            npm install --legacy-peer-deps 2>&1 | tail -3
+            npm install @next/swc-linux-x64-gnu @swc/helpers --legacy-peer-deps --no-save 2>/dev/null || true
+            rm -rf .next 2>/dev/null || true
+            NEXT_PUBLIC_API_URL=http://43.134.86.221:3006 npx next build 2>&1
+            pm2 restart mateinx-frontend 2>&1 | head -3
           "
