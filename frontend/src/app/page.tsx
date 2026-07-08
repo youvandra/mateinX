@@ -84,19 +84,47 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center border border-terminal-200 bg-white p-8">
-        <img src="/logo.png" alt="mateinX" className="h-10 w-10 mx-auto mb-3" />
-        <h1 className="text-xl font-bold text-terminal-800">Solve Chess Puzzles</h1>
-        <p className="text-terminal-500 text-xs mt-2">
-          generate puzzle &rarr; solve &rarr; earn USDT rewards
-        </p>
-        <p className="text-terminal-400 text-[10px] mt-3">
-          {`// an Agentic Service Provider (ASP) on OKX.AI`}
-        </p>
+    <div className="space-y-10">
+      {/* Hero */}
+      <div
+        className="relative border border-terminal-200 overflow-hidden min-h-[320px] flex items-center"
+        style={{
+          backgroundImage: 'url(/Hero.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-white/60" />
+        <div className="relative z-10 px-8 py-12 max-w-2xl">
+          <img src="/logo.png" alt="" className="h-8 w-8 mb-4" />
+          <h1 className="text-3xl font-bold text-terminal-900 leading-tight">
+            Solve Chess Puzzles,
+            <br />
+            Earn Crypto Rewards
+          </h1>
+          <p className="text-terminal-700 text-sm mt-3 max-w-lg leading-relaxed">
+            An Agentic Service Provider on OKX.AI. Generate a chess puzzle at your
+            chosen difficulty, find the winning sequence, and earn USDT when you
+            solve it — all handled automatically through the OKX Agent Payments Protocol.
+          </p>
+          <div className="flex gap-3 mt-5 text-xs font-mono">
+            <span className="border border-terminal-300 px-2 py-1 text-terminal-600">
+              100k+ puzzles
+            </span>
+            <span className="border border-terminal-300 px-2 py-1 text-terminal-600">
+              x402 payments
+            </span>
+            <span className="border border-terminal-300 px-2 py-1 text-terminal-600">
+              instant rewards
+            </span>
+          </div>
+        </div>
       </div>
 
+      {/* Puzzle Generator */}
       <div className="border border-terminal-200 bg-white max-w-xl mx-auto p-6 space-y-4">
+        <p className="text-xs font-mono text-terminal-400">{'// start solving'}</p>
+
         <div>
           <label className="text-xs text-terminal-600 block mb-1">$ wallet_address</label>
           <input
@@ -141,7 +169,7 @@ export default function Home() {
 
       {puzzle && (
         <div className="max-w-4xl mx-auto">
-          <p className="text-xs text-terminal-400 mb-4">{`// puzzle received, solving...`}</p>
+          <p className="text-xs text-terminal-400 mb-4">{'// puzzle received, solving...'}</p>
           <PuzzleView
             fen={puzzle.fen}
             difficulty={puzzle.difficulty}
