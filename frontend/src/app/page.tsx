@@ -12,31 +12,27 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-white/70" />
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16">
-          <img src="/Logo.svg" alt="mateinX" className="h-10 w-10 mb-4" />
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-terminal-900 leading-tight">
-            Solve Chess Puzzles,<br />
-            <span className="text-terminal-600">Earn Crypto Rewards</span>
+          <h1 className="text-4xl md:text-6xl font-bold text-terminal-900 leading-tight">
+            Solve. Earn. Repeat.
           </h1>
-          <p className="text-base md:text-lg text-terminal-700 mt-4 max-w-2xl leading-relaxed">
-            An Agentic Service Provider on OKX.AI. Generate a chess puzzle at your
-            chosen difficulty, find the winning sequence, and earn USDT when you
-            solve it — all handled automatically through the OKX Agent Payments Protocol.
+          <p className="text-base md:text-lg text-terminal-600 mt-3 max-w-xl leading-relaxed">
+            Solve chess puzzles on OKX.AI and earn USDT rewards.
           </p>
 
           <div className="flex flex-wrap gap-3 mt-8">
             <a
               href="/dashboard"
-              className="inline-block px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
             >
-              $ start_solving
+              <span>♟</span> Start Solving
             </a>
             <a
               href="https://okx.ai"
               target="_blank"
               rel="noreferrer"
-              className="inline-block px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
             >
-              $ learn_about_OKX.AI
+              <span>→</span> Learn More
             </a>
           </div>
 
@@ -108,9 +104,9 @@ export default function Home() {
           <div className="text-center mt-10">
             <a
               href="/dashboard"
-              className="inline-block px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
             >
-              $ start_solving
+              ♟ Start Solving
             </a>
           </div>
         </div>
@@ -153,15 +149,15 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-3 mt-8">
             <a
               href="/dashboard"
-              className="inline-block px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-800 text-white text-sm font-mono hover:bg-terminal-700 transition-colors border border-terminal-800"
             >
-              $ go_to_dashboard
+              ♟ Dashboard
             </a>
             <a
               href="/leaderboard"
-              className="inline-block px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-white text-terminal-800 text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
             >
-              $ view_leaderboard
+              🏆 Leaderboard
             </a>
           </div>
         </div>
