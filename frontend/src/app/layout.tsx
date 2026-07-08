@@ -11,17 +11,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen bg-terminal-50 text-terminal-800">
-        <nav className="border-b border-terminal-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
           <div className="w-full px-6 h-16 flex items-center justify-between">
             <a href="/" className="flex items-center gap-2.5">
               <img src="/Logo.svg" alt="mateinX" className="h-7 w-7" />
-              <span className="text-base font-bold text-terminal-800 tracking-tight">
+              <span className="text-base font-bold text-terminal-900 tracking-tight">
                 mateinX
               </span>
             </a>
-            <div className="flex items-center gap-6 text-sm font-medium text-terminal-500">
-              <a href="/dashboard" className="hover:text-terminal-800 transition-colors">Dashboard</a>
-              <a href="/leaderboard" className="hover:text-terminal-800 transition-colors">Leaderboard</a>
+            <div className="flex items-center gap-6 text-sm font-medium text-terminal-700">
+              <a href="/dashboard" className="hover:text-terminal-900 transition-colors">Dashboard</a>
+              <a href="/leaderboard" className="hover:text-terminal-900 transition-colors">Leaderboard</a>
               <a
                 href="https://okx.ai/agents"
                 target="_blank"
