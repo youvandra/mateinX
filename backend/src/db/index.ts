@@ -49,6 +49,7 @@ export async function initDatabase(): Promise<SqlJsDb> {
       solution TEXT,
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       solved_at TEXT,
+      expires_at TEXT NOT NULL DEFAULT (datetime('now', '+10 minutes')),
       FOREIGN KEY (puzzle_id) REFERENCES puzzles(id)
     );
 

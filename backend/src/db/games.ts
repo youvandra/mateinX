@@ -13,6 +13,7 @@ export interface Game {
   solution: string | null;
   created_at: string;
   solved_at: string | null;
+  expires_at: string;
 }
 
 export function createGame(

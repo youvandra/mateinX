@@ -5,7 +5,7 @@ import { getLeaderboard, getUserStats, recordSolve, recordFail } from '../db/lea
 import { buildPaymentRequiredResponse, verifyPayment } from '../payments/x402';
 import { sendReward } from '../rewards/dispatcher';
 import { getPuzzleCountByDifficulty } from '../db/puzzles';
-import { getDb } from '../db';
+import { getDb, saveDb } from '../db';
 
 const router = Router();
 
@@ -124,6 +124,13 @@ router.post('/v1/solve', (req: Request, res: Response) => {
     });
   }
 
+  if (new Date(game.expires_at) < new Date()) {
+    return res.status(410).json({
+      error: 'game_expired',
+      message: 'Time limit exceeded. The puzzle has expired.',
+    });
+  }
+
   const db = getDb();
   const stmt = db.prepare('SELECT fen, moves FROM puzzles WHERE id = ?');
   stmt.bind([game.puzzle_id]);
@@ -217,6 +224,16 @@ router.get('/v1/health', (_req: Request, res: Response) => {
     puzzles: puzzleCounts,
     timestamp: new Date().toISOString(),
   });
+});
+
+router.post('/v1/cleanup', (_req: Request, res: Response) => {
+  const db = getDb();
+  db.run(`
+    UPDATE games SET status = 'expired'
+    WHERE status = 'active' AND expires_at < datetime('now')
+  `);
+  saveDb();
+  res.json({ message: 'expired games cleaned up' });
 });
 
 function getReward(difficulty: string): number {
