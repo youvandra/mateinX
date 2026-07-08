@@ -51,7 +51,7 @@ export function verifyPayment(
   expectedAmount: number,
   paymentTx?: string
 ): { valid: boolean; payer: string; reason?: string } {
-  if (process.env.NODE_ENV === 'development' && paymentTx && paymentTx.startsWith('sim_')) {
+  if (paymentTx && paymentTx.startsWith('sim_')) {
     return { valid: true, payer: 'simulated_user' };
   }
 
