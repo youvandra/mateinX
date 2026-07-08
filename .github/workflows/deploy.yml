@@ -31,6 +31,6 @@ jobs:
             cd ~/mateinX/frontend
             rm -rf .next node_modules
             npm install --legacy-peer-deps
-            NEXT_PUBLIC_API_URL=http://43.134.86.221:3006 npm run build
+            NEXT_PUBLIC_API_URL=http://43.134.86.221:3006 npx next build
             pm2 restart mateinx-frontend
           "
