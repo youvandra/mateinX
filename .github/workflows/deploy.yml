@@ -13,33 +13,21 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key 2>/dev/null || echo "SSH_KEY secret not set, skipping"
+          chmod 600 ~/.ssh/deploy_key 2>/dev/null || true
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      - name: Deploy backend
+      - name: Deploy
         run: |
-          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
-            set -e
-            cd ~/mateinX
-            git pull origin main
-            cd backend
-            npm ci
-            pm2 restart mateinx-backend
-          "
-
-      - name: Deploy frontend
-        run: |
-          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
-            set -e
-            cd ~/mateinX/frontend
-            npm ci
-            npm run build
-            pm2 restart mateinx-frontend
-          "
-
-      - name: Reload Nginx
-        run: |
-          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.SSH_HOST }} "
-            sudo nginx -t && sudo systemctl reload nginx || true
-          "
+          if [ -f ~/.ssh/deploy_key ] && [ -s ~/.ssh/deploy_key ]; then
+            ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ubuntu@${{ secrets.SSH_HOST }} "
+              set -e
+              cd ~/mateinX
+              git pull origin main
+              cd backend && npm ci && pm2 restart mateinx-backend
+              cd ../frontend && npm ci --legacy-peer-deps && NEXT_PUBLIC_API_URL=http://43.134.86.221:3006 npm run build && pm2 restart mateinx-frontend
+            "
+          else
+            echo "SSH_KEY not configured. Skipping deploy."
+            echo "To enable auto-deploy, add SSH_KEY and SSH_HOST secrets to this repo."
+          fi

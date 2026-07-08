@@ -19,18 +19,18 @@ jobs:
             backend/package-lock.json
             frontend/package-lock.json
 
-      - name: Install backend deps
+      - name: Install backend dependencies
         working-directory: ./backend
         run: npm ci
 
       - name: Typecheck backend
         working-directory: ./backend
-        run: npm run typecheck
+        run: npx tsc --noEmit
 
-      - name: Install frontend deps
+      - name: Install frontend dependencies
         working-directory: ./frontend
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Typecheck frontend
         working-directory: ./frontend
-        run: npm run typecheck
+        run: npx tsc --noEmit
