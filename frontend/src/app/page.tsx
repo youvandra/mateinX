@@ -14,11 +14,13 @@ export default function Home() {
         <div className="relative z-10 w-full px-8 md:px-16 py-24">
           <div className="max-w-xl">
             <h1 className="text-4xl md:text-7xl font-bold text-terminal-900 leading-tight">
-              Solve. Earn. Repeat.
+              Solve Chess Puzzles,<br />
+              <span className="text-terminal-600">Earn Crypto Rewards</span>
             </h1>
             <p className="text-base md:text-xl text-terminal-700 mt-4 leading-relaxed">
-              Solve chess puzzles on OKX.AI and earn USDT. Pick a difficulty,
-              find the winning moves, and get paid instantly.
+              An Agentic Service Provider (ASP) on OKX.AI. Generate a chess puzzle at your
+              chosen difficulty, find the winning sequence, and earn USDT when you
+              solve it — all handled automatically through the OKX Agent Payments Protocol.
             </p>
 
             <div className="flex flex-wrap gap-3 mt-10">
@@ -36,21 +38,6 @@ export default function Home() {
               >
                 <span>→</span> Learn More
               </a>
-            </div>
-
-            <div className="flex flex-wrap gap-2 mt-10 text-sm font-mono">
-              <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
-                100,000+ puzzles
-              </span>
-              <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
-                x402 payments
-              </span>
-              <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
-                instant USDT rewards
-              </span>
-              <span className="border border-terminal-300 px-3 py-1.5 text-terminal-600 bg-white/80">
-                open on OKX.AI
-              </span>
             </div>
           </div>
         </div>
