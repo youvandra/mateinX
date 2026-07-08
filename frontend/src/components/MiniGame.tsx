@@ -208,7 +208,6 @@ export default function MiniGame() {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 }
