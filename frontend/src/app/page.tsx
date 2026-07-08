@@ -27,9 +27,16 @@ export default function Home() {
     localStorage.setItem('mateinx_address', val);
   };
 
+  const difficulties: { key: Difficulty; label: string; desc: string }[] = [
+    { key: 'easy', label: 'easy', desc: '800-1200' },
+    { key: 'medium', label: 'medium', desc: '1200-1700' },
+    { key: 'hard', label: 'hard', desc: '1700-2200' },
+    { key: 'grandmaster', label: 'gm', desc: '2200+' },
+  ];
+
   const handleGetPuzzle = async () => {
     if (!address) {
-      setError('Enter your XLayer wallet address first');
+      setError('wallet address required');
       return;
     }
     setLoading(true);
@@ -37,7 +44,8 @@ export default function Home() {
     setPuzzle(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006'}/v1/puzzle`, {
+      const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006';
+      const res = await fetch(`${base}/v1/puzzle`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ difficulty, user_address: address }),
@@ -47,13 +55,13 @@ export default function Home() {
         const body = await res.json();
         const preview = body.puzzle_preview;
 
-        const confirmRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006'}/v1/puzzle/confirm`, {
+        const confirmRes = await fetch(`${base}/v1/puzzle/confirm`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             puzzle_id: preview.puzzle_id,
             user_address: address,
-            payment_tx: `demo_tx_${Date.now()}`,
+            payment_tx: `demo_${Date.now()}`,
           }),
         });
 
@@ -66,58 +74,55 @@ export default function Home() {
         });
       } else {
         const data = await res.json();
-        setError(data.message || 'Failed to get puzzle');
+        setError(data.message || 'failed to get puzzle');
       }
-    } catch (err) {
-      setError('Could not connect to MateinX API');
+    } catch {
+      setError('connection failed');
     } finally {
       setLoading(false);
     }
   };
 
-  const difficulties: { key: Difficulty; label: string; desc: string }[] = [
-    { key: 'easy', label: 'Easy', desc: '800-1200' },
-    { key: 'medium', label: 'Medium', desc: '1200-1700' },
-    { key: 'hard', label: 'Hard', desc: '1700-2200' },
-    { key: 'grandmaster', label: 'Grandmaster', desc: '2200+' },
-  ];
-
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-3 max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold text-matein-800">Solve Chess Puzzles, Earn Crypto</h1>
-        <p className="text-matein-600">
-          MateinX is an Agentic Service Provider on OKX.AI. Pick a difficulty, solve the puzzle, and earn USDT rewards.
+    <div className="space-y-6">
+      <div className="text-center border border-terminal-700 bg-terminal-900 p-8">
+        <p className="text-xs text-terminal-500 mb-1">$ cat README.md</p>
+        <h1 className="text-2xl font-bold text-terminal-50">Solve Chess Puzzles</h1>
+        <p className="text-terminal-400 text-xs mt-2">
+          generate puzzle → solve → earn USDT rewards
+        </p>
+        <p className="text-terminal-500 text-[10px] mt-4">
+          {`// an Agentic Service Provider (ASP) on OKX.AI`}
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-matein-200 max-w-xl mx-auto space-y-4">
+      <div className="border border-terminal-700 bg-terminal-900 max-w-xl mx-auto p-6 space-y-4">
         <div>
-          <label className="text-sm font-medium text-matein-600 block mb-1">Your XLayer Wallet Address</label>
+          <label className="text-xs text-terminal-400 block mb-1">$ wallet_address</label>
           <input
             type="text"
             value={address}
             onChange={(e) => saveAddress(e.target.value)}
             placeholder="0x..."
-            className="w-full px-3 py-2 border border-matein-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-matein-400"
+            className="w-full terminal-input font-mono text-xs"
           />
         </div>
 
         <div>
-          <label className="text-sm font-medium text-matein-600 block mb-2">Difficulty</label>
-          <div className="grid grid-cols-4 gap-2">
+          <label className="text-xs text-terminal-400 block mb-1">$ difficulty</label>
+          <div className="grid grid-cols-4 gap-1">
             {difficulties.map((d) => (
               <button
                 key={d.key}
                 onClick={() => setDifficulty(d.key)}
-                className={`px-3 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                className={`px-2 py-1.5 text-xs font-mono border ${
                   difficulty === d.key
-                    ? 'bg-matein-600 text-white border-matein-600'
-                    : 'bg-white text-matein-600 border-matein-200 hover:bg-matein-50'
-                }`}
+                    ? 'bg-terminal-100 text-terminal-900 border-terminal-100'
+                    : 'bg-terminal-900 text-terminal-400 border-terminal-700 hover:bg-terminal-800 hover:text-terminal-200'
+                } transition-colors`}
               >
                 {d.label}
-                <span className="block text-xs opacity-70">{d.desc}</span>
+                <span className="block text-[9px] opacity-60">{d.desc}</span>
               </button>
             ))}
           </div>
@@ -126,17 +131,17 @@ export default function Home() {
         <button
           onClick={handleGetPuzzle}
           disabled={loading}
-          className="w-full py-3 bg-matein-600 text-white rounded-xl font-semibold hover:bg-matein-700 disabled:opacity-50 transition-colors"
+          className="w-full py-2.5 terminal-btn-primary font-mono text-xs"
         >
-          {loading ? 'Generating Puzzle...' : 'Get Puzzle'}
+          {loading ? '$ generating...' : '$ generate_puzzle --difficulty ' + difficulty}
         </button>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-red-400 text-[10px]">{`// error: ${error}`}</p>}
       </div>
 
       {puzzle && (
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-xl font-semibold text-matein-700 mb-4">Your Puzzle</h2>
+          <p className="text-xs text-terminal-500 mb-4">{`// puzzle received, solving...`}</p>
           <PuzzleView
             fen={puzzle.fen}
             difficulty={puzzle.difficulty}

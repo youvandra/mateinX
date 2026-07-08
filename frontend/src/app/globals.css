@@ -2,12 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 :root {
-  --foreground: #1c3c32;
-  --background: #f0f7f4;
+  --foreground: #e5e5e5;
+  --background: #000000;
+  --accent: #ffffff;
+  --muted: #404040;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #404040 #000000;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 3px;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', 'Monaco', 'Consolas', monospace;
+}
+
+::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+@layer utilities {
+  .terminal-border {
+    @apply border border-terminal-700;
+  }
+
+  .terminal-card {
+    @apply bg-terminal-900 rounded-none terminal-border;
+  }
+
+  .terminal-input {
+    @apply bg-terminal-900 text-terminal-100 border border-terminal-700 focus:border-terminal-300 focus:outline-none px-3 py-2 text-sm;
+  }
+
+  .terminal-btn {
+    @apply bg-terminal-800 text-terminal-100 border border-terminal-600 hover:bg-terminal-700 hover:border-terminal-400 transition-colors text-sm font-medium;
+  }
+
+  .terminal-btn-primary {
+    @apply bg-terminal-100 text-terminal-900 border border-terminal-100 hover:bg-terminal-300 transition-colors text-sm font-medium;
+  }
+
+  .terminal-tag {
+    @apply px-2 py-0.5 text-xs border;
+  }
 }
