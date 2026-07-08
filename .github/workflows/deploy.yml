@@ -29,6 +29,7 @@ jobs:
           sshpass -p '${{ secrets.SSH_PASSWORD }}' ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SSH_HOST }} "
             set -e
             cd ~/mateinX/frontend
+            rm -rf .next
             npm ci --legacy-peer-deps
             NEXT_PUBLIC_API_URL=http://43.134.86.221:3006 npm run build
             pm2 restart mateinx-frontend
