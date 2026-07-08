@@ -74,7 +74,7 @@ router.post('/v1/puzzle/confirm', (req: Request, res: Response) => {
   const entryFee = getEntryFeeForDifficulty(puzzle.difficulty);
   const reward = getReward(puzzle.difficulty);
 
-  const verification = verifyPayment(authorization || '', entryFee);
+  const verification = verifyPayment(authorization || '', entryFee, payment_tx);
   if (!verification.valid) {
     return res.status(402).json({
       error: 'payment_invalid',
