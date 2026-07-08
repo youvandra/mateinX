@@ -50,12 +50,12 @@ export default function MiniGame() {
         body: JSON.stringify({
           puzzle_id: pid,
           user_address: 'mini_game',
-          payment_tx: `minigame_${Date.now()}`,
+          payment_tx: `sim_minigame_${Date.now()}`,
         }),
       });
       const confirmData = await confirmRes.json();
 
-      if (confirmData.fen && confirmData.total_moves) {
+      if (confirmData.game_id) {
         setPuzzle({
           fen: confirmData.fen,
           puzzleMoves: '',
@@ -98,7 +98,7 @@ export default function MiniGame() {
         body: JSON.stringify({
           puzzle_id: pid,
           user_address: 'mini_game',
-          payment_tx: `minigame_solve_${Date.now()}`,
+          payment_tx: `sim_minigame_solve_${Date.now()}`,
         }),
       });
       const confirmData = await confirmRes.json();
