@@ -42,19 +42,16 @@ async function executeOnchainTransfer(
   to: string,
   amountAtomic: string
 ): Promise<string> {
-  const { execSync } = await import('child_process');
+  const { execFileSync } = await import('child_process');
 
-  const cmd = [
-    'onchainos',
+  const output = execFileSync('onchainos', [
     'wallet',
     'send',
     '--to', to,
     '--token', config.tokenAddress,
     '--amount', amountAtomic,
     '--chain', String(config.chainId),
-  ].join(' ');
-
-  const output = execSync(cmd, { timeout: 30000 }).toString().trim();
+  ], { timeout: 30000 }).toString().trim();
 
   return output;
 }

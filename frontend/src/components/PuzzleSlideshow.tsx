@@ -81,7 +81,7 @@ export default function PuzzleSlideshow() {
   const slide = slides[current % Math.max(slides.length, 1)];
 
   return (
-    <div style={{ width: 480, height: 480 }}>
+    <div className="w-full max-w-[480px] mx-auto">
       <div
         className={animate ? 'animate-swap' : ''}
         onAnimationEnd={() => setAnimate(false)}
@@ -92,8 +92,8 @@ export default function PuzzleSlideshow() {
           boardWidth={480}
           arePiecesDraggable={false}
           customBoardStyle={{ borderRadius: '0px' }}
-          customDarkSquareStyle={{ backgroundColor: '#739552' }}
-          customLightSquareStyle={{ backgroundColor: '#ebecd0' }}
+          customDarkSquareStyle={{ backgroundColor: '#b58863' }}
+          customLightSquareStyle={{ backgroundColor: '#f0d9b5' }}
         />
       </div>
       <style>{`

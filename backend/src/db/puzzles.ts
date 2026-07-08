@@ -14,7 +14,7 @@ export function getRandomPuzzle(difficulty: string): Puzzle | undefined {
   const stmt = db.prepare(`
     SELECT id, fen, moves, rating, difficulty, themes
     FROM puzzles
-    WHERE difficulty = ? AND used < 3
+    WHERE difficulty = ? AND used < 50
     ORDER BY RANDOM()
     LIMIT 1
   `);
