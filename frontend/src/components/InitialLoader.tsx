@@ -1,16 +1,36 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function InitialLoader() {
-  const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false);
+  const minTime = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
+    const img = new Image();
+    img.src = '/Hero.png';
+
+    let done = false;
+    const checkReady = () => {
+      if (done) return;
+      done = true;
+      if (minTime.current) {
+        setReady(true);
+      }
+    };
+
+    img.onload = checkReady;
+    img.onerror = checkReady;
+
+    setTimeout(() => {
+      minTime.current = true;
+      if (done) setReady(true);
+    }, 600);
+
+    return () => { done = true; };
   }, []);
 
-  if (!loading) return null;
+  if (ready) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-terminal-50 transition-opacity duration-500">
