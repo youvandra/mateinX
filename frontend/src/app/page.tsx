@@ -253,28 +253,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA — Dynamic */}
-      <section className="relative py-12 sm:py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-terminal-50 via-white to-terminal-100" />
-        <div className="absolute top-10 left-10 text-6xl sm:text-8xl opacity-5 select-none pointer-events-none"></div>
-        <div className="absolute bottom-10 right-10 text-6xl sm:text-8xl opacity-5 select-none pointer-events-none"></div>
+      {/* CTA */}
+      <section className="relative py-16 sm:py-24 overflow-hidden bg-terminal-800">
+        <div className="absolute inset-0 bg-gradient-to-br from-terminal-800 via-terminal-900 to-black opacity-80" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <ScrollReveal>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-terminal-100 border border-terminal-200 rounded-full text-xs font-mono text-terminal-600 mb-4 sm:mb-6">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full text-xs font-mono text-white/70 mb-4 sm:mb-6">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               Ready to play?
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-terminal-900">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
               Your Move.
             </h2>
-            <p className="text-sm sm:text-base text-terminal-600 mt-3 max-w-xl mx-auto">
+            <p className="text-sm sm:text-base text-white/60 mt-3 max-w-xl mx-auto">
               Connect your XLayer wallet and start solving puzzles. Every correct
               solution earns USDT directly to your wallet.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mt-6 sm:mt-8">
               <a
                 href="/dashboard"
-                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 bg-terminal-800 text-white text-xs sm:text-sm font-mono hover:bg-terminal-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 border border-terminal-800"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 bg-white text-terminal-900 text-xs sm:text-sm font-mono hover:bg-terminal-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
               >
                 ♟ Dashboard
               </a>
@@ -282,7 +280,7 @@ export default function Home() {
                 href="https://okx.ai/agents"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 bg-white text-terminal-800 text-xs sm:text-sm font-mono hover:bg-terminal-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 border border-terminal-300"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 bg-white/10 text-white text-xs sm:text-sm font-mono hover:bg-white/20 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 border border-white/20"
               >
                 → Try on OKX.AI
               </a>
