@@ -134,9 +134,7 @@ export default function Home() {
                 <span></span> Start Solving
               </a>
               <a
-                href="https://okx.ai"
-                target="_blank"
-                rel="noreferrer"
+                href="/docs"
                 className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 bg-white text-terminal-800 text-xs sm:text-sm font-mono hover:bg-terminal-50 transition-colors border border-terminal-300"
               >
                 <span>→</span> Learn More
