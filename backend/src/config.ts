@@ -7,7 +7,7 @@ export const config = {
   okxApiKey: process.env.OKX_API_KEY || '',
   okxSecretKey: process.env.OKX_SECRET_KEY || '',
   okxPassphrase: process.env.OKX_PASSPHRASE || '',
-  rewardWalletAddress: process.env.REWARD_WALLET_ADDRESS || '',
+  rewardWalletAddress: process.env.REWARD_WALLET_ADDRESS || '0x08d3e28263766be87fb251d768cf6dcdeec91275',
   entryFees: {
     easy: 0.5,
     medium: 0.5,
