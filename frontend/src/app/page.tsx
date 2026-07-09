@@ -116,9 +116,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-white/30" />
         <div className="relative z-10 w-full px-4 sm:px-8 md:px-16 py-16 sm:py-24">
           <div className="max-w-3xl">
-            <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold text-terminal-900 leading-tight tracking-wide">
-              Solve Chess Puzzles,<br />
-              <span className="text-terminal-600">Earn Crypto Rewards</span>
+            <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold text-terminal-900 leading-tight tracking-wide flex flex-col">
+              <span className="text-nowrap">Solve Chess Puzzles,</span>
+              <span className="text-nowrap text-terminal-600">Earn Crypto Rewards</span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-terminal-700 mt-6 sm:mt-10 leading-relaxed max-w-xl">
               An Agentic Service Provider (ASP) on OKX.AI. Generate a chess puzzle at your
